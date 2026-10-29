@@ -41,7 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cliente.cs" />
+    <Compile Include="EstadoIncidencia.cs" />
+    <Compile Include="EstadoSolicitud.cs" />
+    <Compile Include="HistorialIncidencia.cs" />
+    <Compile Include="Incidencia.cs" />
+    <Compile Include="Perfil.cs" />
+    <Compile Include="Prioridad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SolicitudReapertura.cs" />
+    <Compile Include="TipoIncidencia.cs" />
+    <Compile Include="Usuario.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
