@@ -1,6 +1,6 @@
 <Solution>
-  <Project Path="CallCenterWeb/CallCenterWeb.csproj" />
-  <Project Path="Datos/Datos.csproj" />
-  <Project Path="Dominio/Dominio.csproj" />
-  <Project Path="Negocio/Negocio.csproj" />
+  <Project Path="CallCenterWeb/CallCenterWeb.csproj" Id="77ced740-3139-448a-9952-3993eab8afd3" />
+  <Project Path="Datos/Datos.csproj" Id="8d40bddb-e163-4019-aeb6-8af3b15e2545" />
+  <Project Path="Dominio/Dominio.csproj" Id="cabad558-7b27-4601-884f-904b64e61a23" />
+  <Project Path="Negocio/Negocio.csproj" Id="8bb62b0f-cfbd-4f59-a528-0133cfc32617" />
 </Solution>
