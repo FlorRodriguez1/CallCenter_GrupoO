@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -17,6 +11,9 @@ namespace Datos
         private SqlCommand comando;
         private SqlDataReader lector;
 
+        // Se prueban en orden; se usa la primera que logre conectarse
+        private static readonly string[] nombresConexion = { "CallCenterDB", "CallCenterDBLocal" };
+
         public SqlDataReader Lector
         {
             get { return lector; }
@@ -24,8 +21,33 @@ namespace Datos
 
         public AccesoDatos()
         {
-            conexion = new SqlConnection(ConfigurationManager.ConnectionStrings["CallCenterDB"].ConnectionString);
+            conexion = new SqlConnection();
             comando = new SqlCommand();
+        }
+
+        private void AbrirConexion()
+        {
+            Exception ultimoError = null;
+
+            foreach (string nombre in nombresConexion)
+            {
+                ConnectionStringSettings cs = ConfigurationManager.ConnectionStrings[nombre];
+                if (cs == null)
+                    continue;
+
+                try
+                {
+                    conexion.ConnectionString = cs.ConnectionString;
+                    conexion.Open();
+                    return;
+                }
+                catch (SqlException ex)
+                {
+                    ultimoError = ex;
+                }
+            }
+
+            throw new Exception("No se pudo conectar a la base de datos con ninguna de las cadenas configuradas.", ultimoError);
         }
 
         public void SetearProcedimiento(string nombre)
@@ -48,14 +70,14 @@ namespace Datos
         public void EjecutarLectura()
         {
             comando.Connection = conexion;
-            conexion.Open();
+            AbrirConexion();
             lector = comando.ExecuteReader();
         }
 
         public void EjecutarAccion()
         {
             comando.Connection = conexion;
-            conexion.Open();
+            AbrirConexion();
             comando.ExecuteNonQuery();
         }
 
