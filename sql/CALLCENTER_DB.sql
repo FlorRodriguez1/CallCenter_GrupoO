@@ -1,4 +1,4 @@
-﻿USE master;
+USE master;
 GO
 
 IF DB_ID('CALLCENTER_DB') IS NOT NULL
@@ -191,8 +191,11 @@ SELECT
     I.FechaCreacion,
     I.FechaResolucion,
     I.FechaCierre,
+    I.ComentarioRespuesta,
+    I.ComentarioCierre,
     I.IdCliente,
     C.Nombre + ' ' + C.Apellido   AS Cliente,
+    C.Email                       AS EmailCliente,
     I.IdTipo,
     T.Descripcion                 AS Tipo,
     I.IdPrioridad,
@@ -213,8 +216,10 @@ INNER JOIN Usuarios UA          ON UA.IdUsuario  = I.IdUsuarioAsignado;
 GO
 
 -- =============================================
--- 7. PROCEDIMIENTOS ALMACENADOS 
+-- 7. PROCEDIMIENTOS ALMACENADOS
 -- =============================================
+
+-- ---------- Clientes ----------
 
 CREATE PROCEDURE SP_ListarClientes AS
 BEGIN
@@ -267,6 +272,8 @@ BEGIN
 END
 GO
 
+-- ---------- Tipos y prioridades ----------
+
 CREATE PROCEDURE SP_ListarTiposIncidencia AS
 BEGIN
     SELECT IdTipo, Descripcion, Activo FROM TiposIncidencia;
@@ -276,5 +283,119 @@ GO
 CREATE PROCEDURE SP_ListarPrioridades AS
 BEGIN
     SELECT IdPrioridad, Descripcion, Activo FROM Prioridades;
+END
+GO
+
+-- ---------- Incidencias ----------
+
+-- Lista todas, o solo las de un usuario si se pasa @IdUsuarioAsignado (telefonista)
+CREATE PROCEDURE SP_ListarIncidencias
+    @IdUsuarioAsignado INT = NULL
+AS
+BEGIN
+    SELECT * FROM VW_Incidencias
+    WHERE @IdUsuarioAsignado IS NULL OR IdUsuarioAsignado = @IdUsuarioAsignado
+    ORDER BY FechaCreacion DESC;
+END
+GO
+
+CREATE PROCEDURE SP_ObtenerIncidencia
+    @IdIncidencia INT
+AS
+BEGIN
+    SELECT * FROM VW_Incidencias WHERE IdIncidencia = @IdIncidencia;
+END
+GO
+
+-- Devuelve el Id generado
+CREATE PROCEDURE SP_AgregarIncidencia
+    @IdCliente         INT,
+    @IdTipo            INT,
+    @IdPrioridad       INT,
+    @IdEstado          INT,
+    @IdUsuarioCreador  INT,
+    @IdUsuarioAsignado INT,
+    @Problematica      NVARCHAR(2000)
+AS
+BEGIN
+    INSERT INTO Incidencias (IdCliente, IdTipo, IdPrioridad, IdEstado, IdUsuarioCreador, IdUsuarioAsignado, Problematica)
+    VALUES (@IdCliente, @IdTipo, @IdPrioridad, @IdEstado, @IdUsuarioCreador, @IdUsuarioAsignado, @Problematica);
+
+    SELECT CAST(SCOPE_IDENTITY() AS INT) AS IdIncidencia;
+END
+GO
+
+-- Edición de los datos de la incidencia (el estado nuevo lo manda Negocio)
+CREATE PROCEDURE SP_ModificarIncidencia
+    @IdIncidencia INT,
+    @IdCliente    INT,
+    @IdTipo       INT,
+    @IdPrioridad  INT,
+    @IdEstado     INT,
+    @Problematica NVARCHAR(2000)
+AS
+BEGIN
+    UPDATE Incidencias
+    SET IdCliente    = @IdCliente,
+        IdTipo       = @IdTipo,
+        IdPrioridad  = @IdPrioridad,
+        IdEstado     = @IdEstado,
+        Problematica = @Problematica
+    WHERE IdIncidencia = @IdIncidencia;
+END
+GO
+
+-- Sirve para Reasignar, Resolver, Cerrar y Reabrir: lo que llega NULL no se toca
+CREATE PROCEDURE SP_CambiarEstadoIncidencia
+    @IdIncidencia        INT,
+    @IdEstado            INT,
+    @IdUsuarioAsignado   INT = NULL,
+    @FechaResolucion     DATETIME = NULL,
+    @FechaCierre         DATETIME = NULL,
+    @ComentarioRespuesta NVARCHAR(1000) = NULL,
+    @ComentarioCierre    NVARCHAR(1000) = NULL
+AS
+BEGIN
+    UPDATE Incidencias
+    SET IdEstado            = @IdEstado,
+        IdUsuarioAsignado   = ISNULL(@IdUsuarioAsignado, IdUsuarioAsignado),
+        FechaResolucion     = ISNULL(@FechaResolucion, FechaResolucion),
+        FechaCierre         = ISNULL(@FechaCierre, FechaCierre),
+        ComentarioRespuesta = ISNULL(@ComentarioRespuesta, ComentarioRespuesta),
+        ComentarioCierre    = ISNULL(@ComentarioCierre, ComentarioCierre)
+    WHERE IdIncidencia = @IdIncidencia;
+END
+GO
+
+-- ---------- Historial ----------
+
+CREATE PROCEDURE SP_AgregarHistorial
+    @IdIncidencia     INT,
+    @IdUsuario        INT,
+    @IdEstadoAnterior INT = NULL,
+    @IdEstadoNuevo    INT,
+    @Comentario       NVARCHAR(1000) = NULL
+AS
+BEGIN
+    INSERT INTO HistorialIncidencias (IdIncidencia, IdUsuario, IdEstadoAnterior, IdEstadoNuevo, Comentario)
+    VALUES (@IdIncidencia, @IdUsuario, @IdEstadoAnterior, @IdEstadoNuevo, @Comentario);
+END
+GO
+
+CREATE PROCEDURE SP_ListarHistorial
+    @IdIncidencia INT
+AS
+BEGIN
+    SELECT H.IdHistorial, H.IdIncidencia, H.Fecha, H.IdUsuario,
+           U.Nombre + ' ' + U.Apellido AS Usuario,
+           H.IdEstadoAnterior, EA.Descripcion AS EstadoAnterior,
+           H.IdEstadoNuevo,    EN.Descripcion AS EstadoNuevo,
+           H.Comentario
+    FROM HistorialIncidencias H
+    INNER JOIN Usuarios U            ON U.IdUsuario = H.IdUsuario
+    LEFT  JOIN EstadosIncidencia EA  ON EA.IdEstado = H.IdEstadoAnterior
+    INNER JOIN EstadosIncidencia EN  ON EN.IdEstado = H.IdEstadoNuevo
+    WHERE H.IdIncidencia = @IdIncidencia
+    ORDER BY H.Fecha DESC, H.IdHistorial DESC;
 END
 GO
