@@ -19,5 +19,13 @@ namespace CallCenterWeb
                 dgvClientes.DataBind();
             }
         }
+
+        protected void dgvClientes_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            ClienteNegocio negocio = new ClienteNegocio();
+            dgvClientes.PageIndex = e.NewPageIndex;
+            dgvClientes.DataSource = negocio.Listar();
+            dgvClientes.DataBind();
+        }
     }
 }
