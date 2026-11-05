@@ -13,6 +13,8 @@
 
 <div class="card shadow-sm mb-4">
     <div class="card-body">
+
+        <asp:Label ID="lblMensaje" runat="server" CssClass="alert alert-danger d-block" Visible="false" />
         
 
         <!-- Datos de identidad -->
@@ -62,7 +64,7 @@
         <!-- Botones -->
         <div class="d-flex justify-content-between">
             <a class="btn btn-outline-secondary" runat="server" href="~/Clientes">Cancelar</a>
-            <asp:Button ID="btnGuardar" runat="server" Text="Guardar cliente" CssClass="btn btn-primary" />
+            <asp:Button ID="btnGuardar" runat="server" Text="Guardar cliente" CssClass="btn btn-primary" OnClick="btnGuardar_Click" />
         </div>
 
     </div>

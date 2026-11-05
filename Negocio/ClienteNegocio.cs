@@ -106,5 +106,25 @@ namespace Negocio
             aux.Activo = (bool)datos.Lector["Activo"];
             return aux;
         }
+        //prueba para guardar clientes
+        public void GuardarCliente(Cliente cliente)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearProcedimiento("SP_GuardarCliente");
+                datos.SetearParametro("@DNI", cliente.DNI);
+                datos.SetearParametro("@Nombre", cliente.Nombre);
+                datos.SetearParametro("@Apellido", cliente.Apellido);
+                datos.SetearParametro("@Email", cliente.Email);
+                datos.SetearParametro("@Telefono", cliente.Telefono);
+                datos.EjecutarAccion();
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
     }
 }
