@@ -280,9 +280,65 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE SP_ObtenerTipoIncidencia
+    @IdTipo INT
+AS
+BEGIN
+    SELECT IdTipo, Descripcion, Activo FROM TiposIncidencia WHERE IdTipo = @IdTipo;
+END
+GO
+
+CREATE PROCEDURE SP_AgregarTipoIncidencia
+    @Descripcion NVARCHAR(50)
+AS
+BEGIN
+    INSERT INTO TiposIncidencia (Descripcion) VALUES (@Descripcion);
+END
+GO
+
+CREATE PROCEDURE SP_ModificarTipoIncidencia
+    @IdTipo      INT,
+    @Descripcion NVARCHAR(50),
+    @Activo      BIT
+AS
+BEGIN
+    UPDATE TiposIncidencia
+    SET Descripcion = @Descripcion, Activo = @Activo
+    WHERE IdTipo = @IdTipo;
+END
+GO
+
 CREATE PROCEDURE SP_ListarPrioridades AS
 BEGIN
     SELECT IdPrioridad, Descripcion, Activo FROM Prioridades;
+END
+GO
+
+CREATE PROCEDURE SP_ObtenerPrioridad
+    @IdPrioridad INT
+AS
+BEGIN
+    SELECT IdPrioridad, Descripcion, Activo FROM Prioridades WHERE IdPrioridad = @IdPrioridad;
+END
+GO
+
+CREATE PROCEDURE SP_AgregarPrioridad
+    @Descripcion NVARCHAR(50)
+AS
+BEGIN
+    INSERT INTO Prioridades (Descripcion) VALUES (@Descripcion);
+END
+GO
+
+CREATE PROCEDURE SP_ModificarPrioridad
+    @IdPrioridad INT,
+    @Descripcion NVARCHAR(50),
+    @Activo      BIT
+AS
+BEGIN
+    UPDATE Prioridades
+    SET Descripcion = @Descripcion, Activo = @Activo
+    WHERE IdPrioridad = @IdPrioridad;
 END
 GO
 
