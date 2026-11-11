@@ -14,7 +14,7 @@ namespace Negocio
 
             try
             {
-                datos.SetearProcedimiento("SP_ListarPrioridades");
+                datos.SetearConsulta("SELECT IdPrioridad, Descripcion, Activo FROM Prioridades ORDER BY IdPrioridad");
                 datos.EjecutarLectura();
 
                 while (datos.Lector.Read())

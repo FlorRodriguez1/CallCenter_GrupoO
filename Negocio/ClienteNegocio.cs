@@ -14,7 +14,7 @@ namespace Negocio
 
             try
             {
-                datos.SetearProcedimiento("SP_ListarClientes");
+                datos.SetearConsulta("SELECT IdCliente, DNI, Nombre, Apellido, Email, Telefono, Activo FROM Clientes ORDER BY Apellido, Nombre");
                 datos.EjecutarLectura();
 
                 while (datos.Lector.Read())
@@ -36,7 +36,7 @@ namespace Negocio
 
             try
             {
-                datos.SetearProcedimiento("SP_ObtenerCliente");
+                datos.SetearConsulta("SELECT IdCliente, DNI, Nombre, Apellido, Email, Telefono, Activo FROM Clientes WHERE IdCliente = @IdCliente");
                 datos.SetearParametro("@IdCliente", idCliente);
                 datos.EjecutarLectura();
 
@@ -57,7 +57,7 @@ namespace Negocio
 
             try
             {
-                datos.SetearProcedimiento("SP_AgregarCliente");
+                datos.SetearConsulta("INSERT INTO Clientes (DNI, Nombre, Apellido, Email, Telefono) VALUES (@DNI, @Nombre, @Apellido, @Email, @Telefono)");
                 datos.SetearParametro("@DNI", nuevo.DNI);
                 datos.SetearParametro("@Nombre", nuevo.Nombre);
                 datos.SetearParametro("@Apellido", nuevo.Apellido);
@@ -77,7 +77,7 @@ namespace Negocio
 
             try
             {
-                datos.SetearProcedimiento("SP_ModificarCliente");
+                datos.SetearConsulta("UPDATE Clientes SET DNI = @DNI, Nombre = @Nombre, Apellido = @Apellido, Email = @Email, Telefono = @Telefono, Activo = @Activo WHERE IdCliente = @IdCliente");
                 datos.SetearParametro("@IdCliente", cliente.IdCliente);
                 datos.SetearParametro("@DNI", cliente.DNI);
                 datos.SetearParametro("@Nombre", cliente.Nombre);
@@ -106,7 +106,7 @@ namespace Negocio
             aux.Activo = (bool)datos.Lector["Activo"];
             return aux;
         }
-        //prueba para guardar clientes
+        /*//prueba para guardar clientes
         public void GuardarCliente(Cliente cliente)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -124,7 +124,7 @@ namespace Negocio
             {
                 datos.CerrarConexion();
             }
-        }
+        }*/
 
     }
 }

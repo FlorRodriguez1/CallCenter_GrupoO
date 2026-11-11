@@ -14,7 +14,7 @@ namespace Negocio
 
             try
             {
-                datos.SetearProcedimiento("SP_ListarTiposIncidencia");
+                datos.SetearConsulta("SELECT IdTipo, Descripcion, Activo FROM TiposIncidencia ORDER BY Descripcion");
                 datos.EjecutarLectura();
 
                 while (datos.Lector.Read())
