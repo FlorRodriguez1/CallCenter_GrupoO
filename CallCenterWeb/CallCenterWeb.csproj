@@ -161,6 +161,8 @@
     <Content Include="Site.Master" />
     <Content Include="TipoIncidenciaForm.aspx" />
     <Content Include="TiposIncidencia.aspx" />
+    <Content Include="UsuarioForm.aspx" />
+    <Content Include="Usuarios.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -256,6 +258,20 @@
     </Compile>
     <Compile Include="TiposIncidencia.aspx.designer.cs">
       <DependentUpon>TiposIncidencia.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UsuarioForm.aspx.cs">
+      <DependentUpon>UsuarioForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UsuarioForm.aspx.designer.cs">
+      <DependentUpon>UsuarioForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Usuarios.aspx.cs">
+      <DependentUpon>Usuarios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Usuarios.aspx.designer.cs">
+      <DependentUpon>Usuarios.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>

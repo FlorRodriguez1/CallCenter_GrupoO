@@ -342,6 +342,70 @@ BEGIN
 END
 GO
 
+-- ---------- Usuarios ----------
+-- Los listados no devuelven la Clave. La clave se cambia con su propio SP.
+
+CREATE PROCEDURE SP_ListarUsuarios AS
+BEGIN
+    SELECT IdUsuario, NombreUsuario, Nombre, Apellido, Email, IdPerfil, Activo
+    FROM Usuarios;
+END
+GO
+
+CREATE PROCEDURE SP_ObtenerUsuario
+    @IdUsuario INT
+AS
+BEGIN
+    SELECT IdUsuario, NombreUsuario, Nombre, Apellido, Email, IdPerfil, Activo
+    FROM Usuarios
+    WHERE IdUsuario = @IdUsuario;
+END
+GO
+
+CREATE PROCEDURE SP_AgregarUsuario
+    @NombreUsuario NVARCHAR(50),
+    @Clave         NVARCHAR(256),
+    @Nombre        NVARCHAR(50),
+    @Apellido      NVARCHAR(50),
+    @Email         NVARCHAR(100),
+    @IdPerfil      INT
+AS
+BEGIN
+    INSERT INTO Usuarios (NombreUsuario, Clave, Nombre, Apellido, Email, IdPerfil)
+    VALUES (@NombreUsuario, @Clave, @Nombre, @Apellido, @Email, @IdPerfil);
+END
+GO
+
+CREATE PROCEDURE SP_ModificarUsuario
+    @IdUsuario     INT,
+    @NombreUsuario NVARCHAR(50),
+    @Nombre        NVARCHAR(50),
+    @Apellido      NVARCHAR(50),
+    @Email         NVARCHAR(100),
+    @IdPerfil      INT,
+    @Activo        BIT
+AS
+BEGIN
+    UPDATE Usuarios
+    SET NombreUsuario = @NombreUsuario,
+        Nombre        = @Nombre,
+        Apellido      = @Apellido,
+        Email         = @Email,
+        IdPerfil      = @IdPerfil,
+        Activo        = @Activo
+    WHERE IdUsuario = @IdUsuario;
+END
+GO
+
+CREATE PROCEDURE SP_CambiarClaveUsuario
+    @IdUsuario INT,
+    @Clave     NVARCHAR(256)
+AS
+BEGIN
+    UPDATE Usuarios SET Clave = @Clave WHERE IdUsuario = @IdUsuario;
+END
+GO
+
 -- ---------- Incidencias ----------
 
 -- Lista todas, o solo las de un usuario si se pasa @IdUsuarioAsignado (telefonista)

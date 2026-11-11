@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Datos;
 using Dominio;
 
@@ -21,17 +22,7 @@ namespace Negocio
                 datos.EjecutarLectura();
 
                 if (datos.Lector.Read())
-                {
-                    Usuario usuario = new Usuario();
-                    usuario.IdUsuario = (int)datos.Lector["IdUsuario"];
-                    usuario.NombreUsuario = (string)datos.Lector["NombreUsuario"];
-                    usuario.Nombre = (string)datos.Lector["Nombre"];
-                    usuario.Apellido = (string)datos.Lector["Apellido"];
-                    usuario.Email = (string)datos.Lector["Email"];
-                    usuario.Perfil = (Perfil)(int)datos.Lector["IdPerfil"];
-                    usuario.Activo = (bool)datos.Lector["Activo"];
-                    return usuario;
-                }
+                    return LeerUsuario(datos);
 
                 return null;
             }
@@ -39,6 +30,122 @@ namespace Negocio
             {
                 datos.CerrarConexion();
             }
+        }
+
+        public List<Usuario> Listar()
+        {
+            List<Usuario> lista = new List<Usuario>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearProcedimiento("SP_ListarUsuarios");
+                datos.EjecutarLectura();
+
+                while (datos.Lector.Read())
+                    lista.Add(LeerUsuario(datos));
+
+                return lista;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+        public Usuario Obtener(int idUsuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearProcedimiento("SP_ObtenerUsuario");
+                datos.SetearParametro("@IdUsuario", idUsuario);
+                datos.EjecutarLectura();
+
+                if (datos.Lector.Read())
+                    return LeerUsuario(datos);
+
+                return null;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+        public void Agregar(Usuario nuevo, string clave)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearProcedimiento("SP_AgregarUsuario");
+                datos.SetearParametro("@NombreUsuario", nuevo.NombreUsuario);
+                datos.SetearParametro("@Clave", clave);
+                datos.SetearParametro("@Nombre", nuevo.Nombre);
+                datos.SetearParametro("@Apellido", nuevo.Apellido);
+                datos.SetearParametro("@Email", nuevo.Email);
+                datos.SetearParametro("@IdPerfil", (int)nuevo.Perfil);
+                datos.EjecutarAccion();
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+        public void Modificar(Usuario usuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearProcedimiento("SP_ModificarUsuario");
+                datos.SetearParametro("@IdUsuario", usuario.IdUsuario);
+                datos.SetearParametro("@NombreUsuario", usuario.NombreUsuario);
+                datos.SetearParametro("@Nombre", usuario.Nombre);
+                datos.SetearParametro("@Apellido", usuario.Apellido);
+                datos.SetearParametro("@Email", usuario.Email);
+                datos.SetearParametro("@IdPerfil", (int)usuario.Perfil);
+                datos.SetearParametro("@Activo", usuario.Activo);
+                datos.EjecutarAccion();
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+        public void CambiarClave(int idUsuario, string clave)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearProcedimiento("SP_CambiarClaveUsuario");
+                datos.SetearParametro("@IdUsuario", idUsuario);
+                datos.SetearParametro("@Clave", clave);
+                datos.EjecutarAccion();
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+        // La clave nunca se carga en el objeto
+        private Usuario LeerUsuario(AccesoDatos datos)
+        {
+            Usuario aux = new Usuario();
+            aux.IdUsuario = (int)datos.Lector["IdUsuario"];
+            aux.NombreUsuario = (string)datos.Lector["NombreUsuario"];
+            aux.Nombre = (string)datos.Lector["Nombre"];
+            aux.Apellido = (string)datos.Lector["Apellido"];
+            aux.Email = (string)datos.Lector["Email"];
+            aux.Perfil = (Perfil)(int)datos.Lector["IdPerfil"];
+            aux.Activo = (bool)datos.Lector["Activo"];
+            return aux;
         }
     }
 }
