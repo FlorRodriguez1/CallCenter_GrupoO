@@ -106,6 +106,33 @@ namespace Negocio
             aux.Activo = (bool)datos.Lector["Activo"];
             return aux;
         }
+
+        public ClienteEstadisticas ObtenerEstadisticas()
+        {
+            ClienteEstadisticas stats = new ClienteEstadisticas();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+
+                datos.SetearProcedimiento("SP_ObtenerEstadisticasCliente");
+                datos.EjecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    
+                    stats.Total = (int)datos.Lector["TotalClientes"];
+                    stats.Activos = (int)datos.Lector["ClientesActivos"];
+                    //stats.ConReclamos = (int)datos.Lector["ConReclamosAbiertos"];
+                }
+
+                return stats;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
         /*//prueba para guardar clientes
         public void GuardarCliente(Cliente cliente)
         {

@@ -16,9 +16,7 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <p class="text-muted small mb-1">TOTAL CLIENTES</p>
-                
-                <h3>5</h3>
-             
+                <asp:Label ID="lblClientes" runat="server" Text="Label"></asp:Label>
             </div>
         </div>
     </div>
@@ -26,7 +24,7 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <p class="text-muted small mb-1">CLIENTES ACTIVOS</p>
-                <h3 class="text-success">5</h3>
+                <asp:Label ID="lblClientesActivos" runat="server" Text="Label"></asp:Label>
             </div>
         </div>
     </div>
