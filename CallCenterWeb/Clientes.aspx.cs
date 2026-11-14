@@ -1,11 +1,7 @@
-﻿using Dominio;
-using Negocio;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
+﻿using System;
 using System.Web.UI.WebControls;
+using Dominio;
+using Negocio;
 
 namespace CallCenterWeb
 {
@@ -13,36 +9,30 @@ namespace CallCenterWeb
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                ClienteNegocio negocio = new ClienteNegocio();
-                dgvClientes.DataSource = negocio.Listar();
-                dgvClientes.DataBind();
+            if (IsPostBack)
+                return;
 
-
-                
-            }
+            CargarGrilla();
+            RellenarEstadisticas();
         }
 
         protected void dgvClientes_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            ClienteNegocio negocio = new ClienteNegocio();
             dgvClientes.PageIndex = e.NewPageIndex;
-            dgvClientes.DataSource = negocio.Listar();
+            CargarGrilla();
+        }
+
+        private void CargarGrilla()
+        {
+            dgvClientes.DataSource = new ClienteNegocio().Listar();
             dgvClientes.DataBind();
         }
 
-        protected void rellenarEstadisticas()
+        private void RellenarEstadisticas()
         {
-            ClienteNegocio negocio = new ClienteNegocio();
-            ClienteEstadisticas stats = new ClienteEstadisticas();
-
-            stats = negocio.ObtenerEstadisticas();
-
+            ClienteEstadisticas stats = new ClienteNegocio().ObtenerEstadisticas();
             lblClientes.Text = stats.Total.ToString();
             lblClientesActivos.Text = stats.Activos.ToString();
-            //LitClientesReclamos.Text = stats.ConReclamos.ToString();
-
         }
     }
 }
