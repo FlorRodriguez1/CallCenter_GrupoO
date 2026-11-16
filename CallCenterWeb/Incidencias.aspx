@@ -56,33 +56,32 @@
             </div>
             <div class="col-md-3 mb-2">
                 <label class="form-label small">Estado</label>
-                <asp:DropDownList ID="ddlEstado" runat="server" CssClass="form-select">
-                    <asp:ListItem Text="Todos los estados" Value="" />
-                    <asp:ListItem Text="Abierto" Value="1" />
-                    <asp:ListItem Text="Asignado" Value="2" />
-                    <asp:ListItem Text="En análisis" Value="3" />
-                    <asp:ListItem Text="Resuelto" Value="4" />
-                    <asp:ListItem Text="Reabierto" Value="5" />
-                    <asp:ListItem Text="Cerrado" Value="6" />
+                <asp:DropDownList ID="ddlEstado" runat="server" CssClass="form-select" AppendDataBoundItems="true" DataTextField="Descripcion" DataValueField="IdEstado">
+                    <asp:ListItem Text="Seleccione estado..." Value="" />
                 </asp:DropDownList>
             </div>
             <div class="col-md-2 mb-2">
                 <label class="form-label small">Tipo</label>
-                <asp:DropDownList ID="ddlTipo" runat="server" CssClass="form-select">
-                    <asp:ListItem Text="Todos los tipos" Value="" />
+                <asp:DropDownList ID="ddlTipo" runat="server" CssClass="form-select" AppendDataBoundItems="true" DataTextField="Descripcion" DataValueField="IdTipo">
+                    <asp:ListItem Text="Seleccionar tipo..." Value="" />
                 </asp:DropDownList>
             </div>
             <div class="col-md-2 mb-2">
                 <label class="form-label small">Prioridad</label>
-                <asp:DropDownList ID="ddlPrioridad" runat="server" CssClass="form-select">
-                    <asp:ListItem Text="Todas" Value="" />
+                <asp:DropDownList ID="ddlPrioridad" runat="server" CssClass="form-select" AppendDataBoundItems="true" DataTextField="Descripcion" DataValueField="IdPrioridad">
+                    <asp:ListItem Text="Seleccione prioridad..." Value="" />
                 </asp:DropDownList>
             </div>
             <div class="col-md-2 mb-2">
-                <asp:Button ID="btnFiltrar" runat="server" Text="Filtrar" CssClass="btn btn-primary w-100" />
+                <asp:Button ID="btnFiltrar" runat="server" Text="Filtrar" CssClass="btn btn-primary w-100" OnClick="btnFiltrar_Click" />
             </div>
         </div>
+        
     </div>
+
+    <hr />
+    <asp:GridView ID="dgvIncidencias" runat="server"></asp:GridView>
+    
 </div>
 
 <!-- Grilla -->

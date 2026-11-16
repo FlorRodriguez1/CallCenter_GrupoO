@@ -537,6 +537,26 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE SP_FiltrarIncidencias
+    @IdIncidencia INT = NULL,
+    @IdEstado     INT = NULL,
+    @IdTipo       INT = NULL,
+    @IdPrioridad  INT = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT *
+    FROM VW_Incidencias
+    WHERE 
+        (@IdIncidencia IS NULL OR IdIncidencia = @IdIncidencia)
+        AND (@IdEstado IS NULL OR IdEstado = @IdEstado)
+        AND (@IdTipo IS NULL OR IdTipo = @IdTipo)
+        AND (@IdPrioridad IS NULL OR IdPrioridad = @IdPrioridad)
+    ORDER BY FechaCreacion DESC;
+END
+GO
+
 -- ---------- Historial ----------
 
 CREATE PROCEDURE SP_AgregarHistorial
