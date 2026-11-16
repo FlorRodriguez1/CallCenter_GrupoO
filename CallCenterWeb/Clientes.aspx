@@ -60,7 +60,7 @@
         <div class="row mb-3">
             <div class="col-md-6">
                 <div class="input-group">
-                    <asp:TextBox ID="txtBuscar" runat="server" CssClass="form-control" placeholder="Buscar por DNI, nombre o apellido..." />
+                    <asp:TextBox ID="txtBuscar" runat="server" CssClass="form-control" AutoPostBack="true" placeholder="Buscar por DNI, nombre o apellido..." OnTextChanged="txtBuscar_TextChanged" />
                     <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-outline-secondary" />
                 </div>
             </div>

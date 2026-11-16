@@ -1,7 +1,9 @@
-﻿using System;
-using System.Web.UI.WebControls;
-using Dominio;
+﻿using Dominio;
 using Negocio;
+using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System.Web.UI.WebControls;
 
 namespace CallCenterWeb
 {
@@ -52,6 +54,28 @@ namespace CallCenterWeb
             }
 
             dgvClientes.DataBind();
+        }
+
+        protected void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            List<Cliente> lista = new ClienteNegocio().Listar();
+
+            bool esNumero = Regex.IsMatch(txtBuscar.Text, @"\d+");
+
+            if (esNumero)
+            {
+                List<Cliente> listaFiltrada = lista.FindAll(x => x.DNI.ToUpper().Contains(txtBuscar.Text.ToUpper()));
+                dgvClientes.DataSource = listaFiltrada;
+                dgvClientes.DataBind();
+            }
+            else
+            {
+                List<Cliente> listaFiltrada = lista.FindAll(x => x.Nombre.ToUpper().Contains(txtBuscar.Text.ToUpper()));
+                dgvClientes.DataSource = listaFiltrada;
+                dgvClientes.DataBind(); 
+            }
+
+
         }
     }
 }

@@ -56,6 +56,7 @@ CREATE TABLE Clientes (
     Apellido   NVARCHAR(50)  NOT NULL,
     Email      NVARCHAR(100) NOT NULL,
     Telefono   NVARCHAR(30)  NULL,
+    FechaAlta  DATE NOT NULL DEFAULT CAST(GETDATE() AS DATE),
     Activo     BIT           NOT NULL DEFAULT 1
 );
 
@@ -160,12 +161,12 @@ INSERT INTO Usuarios (NombreUsuario, Clave, Nombre, Apellido, Email, IdPerfil) V
 (N'telefonista2', N'PENDIENTE_HASH', N'Carla', N'Díaz',  N'telefonista2@callcenter.test', 2),
 (N'supervisor',   N'PENDIENTE_HASH', N'Diego', N'López', N'supervisor@callcenter.test',   3);
 
-INSERT INTO Clientes (DNI, Nombre, Apellido, Email, Telefono) VALUES
-(N'30111222', N'Laura',   N'Fernández', N'laura.fernandez@example.com', N'11-4000-1111'),
-(N'28333444', N'Martín',  N'Suárez',    N'martin.suarez@example.com',   N'11-4000-2222'),
-(N'35555666', N'Sofía',   N'Romero',    N'sofia.romero@example.com',    N'11-4000-3333'),
-(N'27777888', N'Javier',  N'Torres',    N'javier.torres@example.com',   N'11-4000-4444'),
-(N'33999000', N'Valeria', N'Acosta',    N'valeria.acosta@example.com',  NULL);
+INSERT INTO Clientes (DNI, Nombre, Apellido, Email, Telefono, FechaAlta) VALUES
+(N'30111222', N'Laura',   N'Fernández', N'laura.fernandez@example.com', N'11-4000-1111', '2026-11-15'),
+(N'28333444', N'Martín',  N'Suárez',    N'martin.suarez@example.com',   N'11-4000-2222', '2026-11-15'),
+(N'35555666', N'Sofía',   N'Romero',    N'sofia.romero@example.com',    N'11-4000-3333', '2026-11-15'),
+(N'27777888', N'Javier',  N'Torres',    N'javier.torres@example.com',   N'11-4000-4444', '2026-11-15'),
+(N'33999000', N'Valeria', N'Acosta',    N'valeria.acosta@example.com',  NULL,           '2026-11-15');
 
 INSERT INTO Incidencias (IdCliente, IdTipo, IdPrioridad, IdEstado, IdUsuarioCreador, IdUsuarioAsignado, Problematica) VALUES
 (1, 1, 2, 1, 2, 2, N'La factura de octubre tiene un cargo duplicado.'),
@@ -223,8 +224,18 @@ GO
 
 CREATE PROCEDURE SP_ListarClientes AS
 BEGIN
-    SELECT IdCliente, DNI, Nombre, Apellido, Email, Telefono, Activo
+    SELECT IdCliente, DNI, Nombre, Apellido, Email, Telefono, FechaAlta, Activo
     FROM Clientes;
+END
+GO
+
+CREATE PROCEDURE SP_ListarClientesEstado @Activo BIT AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT IdCliente, DNI, Nombre, Apellido, Email, Telefono, FechaAlta, Activo
+    FROM Clientes
+    WHERE Activo = @Activo;
 END
 GO
 
@@ -232,7 +243,7 @@ CREATE PROCEDURE SP_ObtenerCliente
     @IdCliente INT
 AS
 BEGIN
-    SELECT IdCliente, DNI, Nombre, Apellido, Email, Telefono, Activo
+    SELECT IdCliente, DNI, Nombre, Apellido, Email, Telefono, FechaAlta, Activo
     FROM Clientes
     WHERE IdCliente = @IdCliente;
 END
@@ -269,6 +280,20 @@ BEGIN
         Telefono = @Telefono,
         Activo   = @Activo
     WHERE IdCliente = @IdCliente;
+END
+GO
+
+GO
+CREATE PROCEDURE SP_ObtenerEstadisticasCliente
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        (SELECT COUNT(*) FROM Clientes) AS TotalClientes,        
+        (SELECT COUNT(*) FROM Clientes WHERE Activo = 1) AS ClientesActivos,        
+        (SELECT COUNT(DISTINCT IdCliente) FROM Incidencias WHERE FechaResolucion IS NULL) AS ConReclamosAbiertos,
+        (SELECT COUNT(*) FROM Clientes WHERE MONTH(FechaAlta) = MONTH(GETDATE()) AND YEAR(FechaAlta) = YEAR(GETDATE())) AS NuevosEsteMes
 END
 GO
 
@@ -577,6 +602,7 @@ CREATE TABLE Clientes (
     Apellido   NVARCHAR(50)  NOT NULL,
     Email      NVARCHAR(100) NOT NULL,
     Telefono   NVARCHAR(30)  NULL,
+    FechaAlta  DATE NOT NULL DEFAULT CAST(GETDATE() AS DATE),
     Activo     BIT           NOT NULL DEFAULT 1
 );
 
@@ -681,12 +707,12 @@ INSERT INTO Usuarios (NombreUsuario, Clave, Nombre, Apellido, Email, IdPerfil) V
 (N'telefonista2', N'PENDIENTE_HASH', N'Carla', N'Díaz',  N'telefonista2@callcenter.test', 2),
 (N'supervisor',   N'PENDIENTE_HASH', N'Diego', N'López', N'supervisor@callcenter.test',   3);
 
-INSERT INTO Clientes (DNI, Nombre, Apellido, Email, Telefono) VALUES
-(N'30111222', N'Laura',   N'Fernández', N'laura.fernandez@example.com', N'11-4000-1111'),
-(N'28333444', N'Martín',  N'Suárez',    N'martin.suarez@example.com',   N'11-4000-2222'),
-(N'35555666', N'Sofía',   N'Romero',    N'sofia.romero@example.com',    N'11-4000-3333'),
-(N'27777888', N'Javier',  N'Torres',    N'javier.torres@example.com',   N'11-4000-4444'),
-(N'33999000', N'Valeria', N'Acosta',    N'valeria.acosta@example.com',  NULL);
+INSERT INTO Clientes (DNI, Nombre, Apellido, Email, Telefono, FechaAlta) VALUES
+(N'30111222', N'Laura',   N'Fernández', N'laura.fernandez@example.com', N'11-4000-1111', '2026-11-15'),
+(N'28333444', N'Martín',  N'Suárez',    N'martin.suarez@example.com',   N'11-4000-2222', '2026-11-15'),
+(N'35555666', N'Sofía',   N'Romero',    N'sofia.romero@example.com',    N'11-4000-3333', '2026-11-15'),
+(N'27777888', N'Javier',  N'Torres',    N'javier.torres@example.com',   N'11-4000-4444', '2026-11-15'),
+(N'33999000', N'Valeria', N'Acosta',    N'valeria.acosta@example.com',  NULL,           '2026-11-15');
 
 INSERT INTO Incidencias (IdCliente, IdTipo, IdPrioridad, IdEstado, IdUsuarioCreador, IdUsuarioAsignado, Problematica) VALUES
 (1, 1, 2, 1, 2, 2, N'La factura de octubre tiene un cargo duplicado.'),
@@ -744,16 +770,24 @@ GO
 
 CREATE PROCEDURE SP_ListarClientes AS
 BEGIN
-    SELECT IdCliente, DNI, Nombre, Apellido, Email, Telefono, Activo
+    SELECT IdCliente, DNI, Nombre, Apellido, Email, Telefono, FechaAlta, Activo
     FROM Clientes;
 END
 GO
 
-CREATE PROCEDURE SP_ObtenerCliente
-    @IdCliente INT
-AS
+CREATE PROCEDURE SP_ListarClientesEstado @Activo BIT AS
 BEGIN
-    SELECT IdCliente, DNI, Nombre, Apellido, Email, Telefono, Activo
+    SET NOCOUNT ON;
+
+    SELECT IdCliente, DNI, Nombre, Apellido, Email, Telefono, FechaAlta, Activo
+    FROM Clientes
+    WHERE Activo = @Activo;
+END
+GO
+
+CREATE PROCEDURE SP_ObtenerCliente @IdCliente INT AS
+BEGIN
+    SELECT IdCliente, DNI, Nombre, Apellido, Email, Telefono, FechaAlta, Activo
     FROM Clientes
     WHERE IdCliente = @IdCliente;
 END
@@ -790,6 +824,20 @@ BEGIN
         Telefono = @Telefono,
         Activo   = @Activo
     WHERE IdCliente = @IdCliente;
+END
+GO
+
+GO
+CREATE PROCEDURE SP_ObtenerEstadisticasCliente
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        (SELECT COUNT(*) FROM Clientes) AS TotalClientes,        
+        (SELECT COUNT(*) FROM Clientes WHERE Activo = 1) AS ClientesActivos,        
+        (SELECT COUNT(DISTINCT IdCliente) FROM Incidencias WHERE FechaResolucion IS NULL) AS ConReclamosAbiertos,
+        (SELECT COUNT(*) FROM Clientes WHERE MONTH(FechaAlta) = MONTH(GETDATE()) AND YEAR(FechaAlta) = YEAR(GETDATE())) AS NuevosEsteMes
 END
 GO
 
@@ -1039,11 +1087,3 @@ BEGIN
     WHERE H.IdIncidencia = @IdIncidencia
     ORDER BY H.Fecha DESC, H.IdHistorial DESC;
 END
-GO
-CREATE PROCEDURE SP_ObtenerEstadisticasCliente AS
-BEGIN
-    SELECT COUNT(*) AS TotalClientes,
-           ISNULL(SUM(CASE WHEN Activo = 1 THEN 1 ELSE 0 END), 0) AS ClientesActivos
-    FROM Clientes;
-END
-GO
