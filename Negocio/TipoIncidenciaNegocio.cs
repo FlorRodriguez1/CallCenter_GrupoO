@@ -91,5 +91,57 @@ namespace Negocio
             aux.Activo = (bool)datos.Lector["Activo"];
             return aux;
         }
+
+        public IncidenciaEstadisticas ObtenerEstadisticas()
+        {
+            IncidenciaEstadisticas stats = new IncidenciaEstadisticas();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearProcedimiento("SP_ObtenerEstadisticasIncidencia");
+                datos.EjecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    stats.Total = (int)datos.Lector["TotalIncidencias"];
+                    stats.Abiertas = (int)datos.Lector["Abiertas"];
+                    stats.Analisis = (int)datos.Lector["Pendientes"];
+                    stats.Resueltas = (int)datos.Lector["Resueltas"];
+                }
+
+                return stats;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+        public IncidenciaEstadisticasGuardia ObtenerEstadisticasGuardia()
+        {
+            IncidenciaEstadisticasGuardia stats = new IncidenciaEstadisticasGuardia();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearProcedimiento("SP_ObtenerEstadisticasIncidenciaGuardia");
+                datos.EjecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    stats.Abiertas = (int)datos.Lector["Abiertas"];
+                    stats.Analisis = (int)datos.Lector["Analisis"];
+                    stats.Resueltas = (int)datos.Lector["Resueltas"];
+                    stats.Reaperturas = (int)datos.Lector["Reaperturas"];
+                }
+
+                return stats;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
     }
 }

@@ -15,7 +15,7 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <p class="text-muted small mb-1">TOTAL INCIDENCIAS</p>
-                <h3>3</h3>
+                <asp:Literal ID="litTotal" runat="server"></asp:Literal>
             </div>
         </div>
     </div>
@@ -23,7 +23,7 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <p class="text-muted small mb-1">ABIERTAS</p>
-                <h3 class="text-primary">1</h3>
+                <asp:Literal ID="litAbiertas" runat="server"></asp:Literal>
             </div>
         </div>
     </div>
@@ -31,7 +31,7 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <p class="text-muted small mb-1">EN ANÁLISIS</p>
-                <h3 class="text-warning">1</h3>
+                <asp:Literal ID="litAnalisis" runat="server"></asp:Literal>
             </div>
         </div>
     </div>
@@ -39,7 +39,7 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <p class="text-muted small mb-1">RESUELTAS</p>
-                <h3 class="text-success">1</h3>
+                <asp:Literal ID="litResueltas" runat="server"></asp:Literal>
             </div>
         </div>
     </div>

@@ -116,8 +116,9 @@ namespace CallCenterWeb
 
         protected void btnLimpiar_Click(object sender, EventArgs e)
         {
-            if(lblInfo.Visible == true)
+            if(lblInfo.Visible == true || !string.IsNullOrWhiteSpace(txtBuscar.Text))
             {
+                txtBuscar.Text = "";
                 CargarGrilla();
             }
             return;

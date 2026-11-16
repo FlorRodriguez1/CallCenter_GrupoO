@@ -47,6 +47,8 @@
     <Compile Include="EstadoSolicitud.cs" />
     <Compile Include="HistorialIncidencia.cs" />
     <Compile Include="Incidencia.cs" />
+    <Compile Include="IncidenciaEstadisticas.cs" />
+    <Compile Include="IncidenciaEstadisticasGuardia.cs" />
     <Compile Include="Perfil.cs" />
     <Compile Include="Prioridad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

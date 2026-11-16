@@ -17,7 +17,7 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <p class="text-muted small mb-1">INCIDENCIAS ABIERTAS</p>
-                <h3 class="text-primary">42</h3>
+                <asp:Literal ID="litAbiertas" runat="server"></asp:Literal>
                 <p class="small mb-0">Requieren primera respuesta</p>
             </div>
         </div>
@@ -26,7 +26,7 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <p class="text-muted small mb-1">EN ANÁLISIS</p>
-                <h3>19</h3>
+                <asp:Literal ID="litAnalisis" runat="server"></asp:Literal>
                 <p class="small mb-0">En revisión por el equipo</p>
             </div>
         </div>
@@ -35,7 +35,7 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <p class="text-muted small mb-1">RESUELTAS EN EL TURNO</p>
-                <h3 class="text-success">138</h3>
+                <asp:Literal ID="litResueltas" runat="server"></asp:Literal>
                 <p class="small mb-0">Esperando cierre</p>
             </div>
         </div>
@@ -44,7 +44,7 @@
         <div class="card shadow-sm border-danger">
             <div class="card-body">
                 <p class="text-muted small mb-1">REAPERTURAS PENDIENTES</p>
-                <h3 class="text-danger">7</h3>
+                <asp:Literal ID="litReaperturas" runat="server"></asp:Literal>
                 <p class="small mb-0">Esperan aprobación del supervisor</p>
             </div>
         </div>
