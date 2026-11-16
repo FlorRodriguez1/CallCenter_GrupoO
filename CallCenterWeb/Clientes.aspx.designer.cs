@@ -15,22 +15,40 @@ namespace CallCenterWeb
     {
 
         /// <summary>
-        /// Control lblClientes.
+        /// Control LitClientes.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblClientes;
+        protected global::System.Web.UI.WebControls.Literal LitClientes;
 
         /// <summary>
-        /// Control lblClientesActivos.
+        /// Control LitActivos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblClientesActivos;
+        protected global::System.Web.UI.WebControls.Literal LitActivos;
+
+        /// <summary>
+        /// Control LitReclamos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal LitReclamos;
+
+        /// <summary>
+        /// Control LitNuevos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal LitNuevos;
 
         /// <summary>
         /// Control txtBuscar.

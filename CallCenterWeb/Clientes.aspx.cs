@@ -31,8 +31,10 @@ namespace CallCenterWeb
         private void RellenarEstadisticas()
         {
             ClienteEstadisticas stats = new ClienteNegocio().ObtenerEstadisticas();
-            lblClientes.Text = stats.Total.ToString();
-            lblClientesActivos.Text = stats.Activos.ToString();
+            LitClientes.Text = stats.Total.ToString();
+            LitActivos.Text = stats.Activos.ToString();
+            LitReclamos.Text = stats.ConReclamos.ToString();
+            LitNuevos.Text = stats.NuevosEsteMes.ToString();
         }
     }
 }

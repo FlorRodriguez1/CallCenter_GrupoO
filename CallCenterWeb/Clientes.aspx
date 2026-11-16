@@ -16,7 +16,7 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <p class="text-muted small mb-1">TOTAL CLIENTES</p>
-                <asp:Label ID="lblClientes" runat="server" Text="Label"></asp:Label>
+                <asp:Literal ID="LitClientes" runat="server"></asp:Literal>
             </div>
         </div>
     </div>
@@ -24,7 +24,7 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <p class="text-muted small mb-1">CLIENTES ACTIVOS</p>
-                <asp:Label ID="lblClientesActivos" runat="server" Text="Label"></asp:Label>
+                <asp:Literal ID="LitActivos" runat="server"></asp:Literal>
             </div>
         </div>
     </div>
@@ -32,7 +32,7 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <p class="text-muted small mb-1">CON RECLAMOS ABIERTOS</p>
-                <h3 class="text-danger">3</h3>
+                <asp:Literal ID="LitReclamos" runat="server"></asp:Literal>
             </div>
         </div>
     </div>
@@ -40,7 +40,7 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <p class="text-muted small mb-1">NUEVOS ESTE MES</p>
-                <h3>2</h3>
+                <asp:Literal ID="LitNuevos" runat="server"></asp:Literal>
             </div>
         </div>
     </div>

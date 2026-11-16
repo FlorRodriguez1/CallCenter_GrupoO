@@ -10,7 +10,7 @@ namespace Dominio
     {
         public int Total { get; set; }
         public int Activos { get; set; }
-        //public int ConReclamos { get; set; }
-        //public int NuevosEsteMes { get; set; }
+        public int ConReclamos { get; set; }
+        public int NuevosEsteMes { get; set; }
     }
 }

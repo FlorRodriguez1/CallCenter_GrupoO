@@ -14,7 +14,7 @@ namespace Negocio
 
             try
             {
-                datos.SetearConsulta("SELECT IdCliente, DNI, Nombre, Apellido, Email, Telefono, Activo FROM Clientes ORDER BY Apellido, Nombre");
+                datos.SetearConsulta("SELECT IdCliente, DNI, Nombre, Apellido, Email, Telefono, FechaAlta, Activo FROM Clientes ORDER BY Apellido, Nombre");
                 datos.EjecutarLectura();
 
                 while (datos.Lector.Read())
@@ -36,7 +36,7 @@ namespace Negocio
 
             try
             {
-                datos.SetearConsulta("SELECT IdCliente, DNI, Nombre, Apellido, Email, Telefono, Activo FROM Clientes WHERE IdCliente = @IdCliente");
+                datos.SetearConsulta("SELECT IdCliente, DNI, Nombre, Apellido, Email, Telefono, FechaAlta, Activo FROM Clientes WHERE IdCliente = @IdCliente");
                 datos.SetearParametro("@IdCliente", idCliente);
                 datos.EjecutarLectura();
 
@@ -103,6 +103,7 @@ namespace Negocio
             aux.Apellido = (string)datos.Lector["Apellido"];
             aux.Email = (string)datos.Lector["Email"];
             aux.Telefono = datos.Lector["Telefono"] is DBNull ? null : (string)datos.Lector["Telefono"];
+            aux.FechaAlta = (DateTime)datos.Lector["FechaAlta"];
             aux.Activo = (bool)datos.Lector["Activo"];
             return aux;
         }
@@ -123,7 +124,8 @@ namespace Negocio
                     
                     stats.Total = (int)datos.Lector["TotalClientes"];
                     stats.Activos = (int)datos.Lector["ClientesActivos"];
-                    //stats.ConReclamos = (int)datos.Lector["ConReclamosAbiertos"];
+                    stats.ConReclamos = (int)datos.Lector["ConReclamosAbiertos"];
+                    stats.NuevosEsteMes = (int)datos.Lector["NuevosEsteMes"];
                 }
 
                 return stats;
