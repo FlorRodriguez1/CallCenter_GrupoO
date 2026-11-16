@@ -21,7 +21,7 @@
         </asp:Panel>
     </div>
 </div>
-
+    
 <div class="row">
     <!-- Datos del reclamo (editable) -->
     <div class="col-lg-7 mb-4">
@@ -31,7 +31,7 @@
 
                 <div class="mb-3">
                     <label class="form-label">Cliente <span class="text-danger">*</span></label>
-                    <asp:DropDownList ID="ddlCliente" runat="server" CssClass="form-select">
+                    <asp:DropDownList ID="ddlCliente" runat="server" CssClass="form-select" AppendDataBoundItems="true" DataTextField="Nombre" DataValueField="IdCliente">
                         <asp:ListItem Text="Seleccione un cliente..." Value="" />
                     </asp:DropDownList>
                 </div>
@@ -39,13 +39,13 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label class="form-label">Tipo de incidencia <span class="text-danger">*</span></label>
-                        <asp:DropDownList ID="ddlTipo" runat="server" CssClass="form-select">
+                        <asp:DropDownList ID="ddlTipo" runat="server" CssClass="form-select" AppendDataBoundItems="true" DataTextField="Descripcion" DataValueField="IdTipo">
                             <asp:ListItem Text="Seleccione..." Value="" />
                         </asp:DropDownList>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Prioridad <span class="text-danger">*</span></label>
-                        <asp:DropDownList ID="ddlPrioridad" runat="server" CssClass="form-select">
+                        <asp:DropDownList ID="ddlPrioridad" runat="server" CssClass="form-select" AppendDataBoundItems="true" DataTextField="Descripcion" DataValueField="IdPrioridad"> 
                             <asp:ListItem Text="Seleccione..." Value="" />
                         </asp:DropDownList>
                     </div>
@@ -58,7 +58,7 @@
                 </div>
 
                 <div class="text-end">
-                    <asp:Button ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-primary" />
+                    <asp:Button ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-primary" OnClick="btnGuardar_Click" />
                 </div>
             </div>
         </div>

@@ -16,5 +16,10 @@ namespace Dominio
         public string Telefono { get; set; }
         public DateTime FechaAlta { get; set; }
         public bool Activo { get; set; }
+
+        public override string ToString()
+        {
+            return Nombre;
+        }
     }
 }

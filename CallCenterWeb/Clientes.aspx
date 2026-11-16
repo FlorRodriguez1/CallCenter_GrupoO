@@ -71,9 +71,7 @@
             </div>
         </div>
 
-        <asp:GridView ID="dgvClientes" runat="server" AutoGenerateColumns="false"
-            CssClass="table table-hover align-middle" GridLines="None" DataKeyNames="IdCliente" 
-            AllowPaging="true" PageSize="10" OnPageIndexChanging="dgvClientes_PageIndexChanging">
+        <asp:GridView ID="dgvClientes" runat="server" AutoGenerateColumns="false" CssClass="table table-hover align-middle" GridLines="None" DataKeyNames="IdCliente" AllowPaging="true" PageSize="10" OnPageIndexChanging="dgvClientes_PageIndexChanging">
             <HeaderStyle CssClass="table-light" />
             <Columns>
                 <asp:BoundField HeaderText="DNI" DataField="DNI" />

@@ -131,7 +131,7 @@ namespace Negocio
                 if (datos.Lector.Read())
                 {
                     stats.Abiertas = (int)datos.Lector["Abiertas"];
-                    stats.Analisis = (int)datos.Lector["Analisis"];
+                    stats.Analisis = (int)datos.Lector["EnAnalisis"];
                     stats.Resueltas = (int)datos.Lector["Resueltas"];
                     stats.Reaperturas = (int)datos.Lector["Reaperturas"];
                 }
