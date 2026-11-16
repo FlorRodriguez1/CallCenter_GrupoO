@@ -30,6 +30,30 @@ namespace Negocio
             }
         }
 
+        public List<Cliente> ListarPorEstado(bool estado)
+        {
+            List<Cliente> lista = new List<Cliente>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearProcedimiento("SP_ListarClientesEstado");
+                datos.SetearParametro("@Activo", estado);
+                datos.EjecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    lista.Add(LeerCliente(datos));
+                }
+
+                return lista;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
         public Cliente Obtener(int idCliente)
         {
             AccesoDatos datos = new AccesoDatos();

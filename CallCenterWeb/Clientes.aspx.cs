@@ -36,5 +36,22 @@ namespace CallCenterWeb
             LitReclamos.Text = stats.ConReclamos.ToString();
             LitNuevos.Text = stats.NuevosEsteMes.ToString();
         }
+
+        protected void ddlEstado_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ddlEstado.SelectedValue == "1") {
+                dgvClientes.DataSource = new ClienteNegocio().ListarPorEstado(true);
+            }else if (ddlEstado.SelectedValue == "0")
+            {
+                dgvClientes.DataSource = new ClienteNegocio().ListarPorEstado(false);
+            }
+            else
+            {
+                CargarGrilla();
+                return; 
+            }
+
+            dgvClientes.DataBind();
+        }
     }
 }

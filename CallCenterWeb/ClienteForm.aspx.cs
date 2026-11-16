@@ -36,7 +36,7 @@ namespace CallCenterWeb
                 txtApellido.Text = cliente.Apellido;
                 txtEmail.Text = cliente.Email;
                 txtTelefono.Text = cliente.Telefono;
-                txtRegistro.Text = cliente.FechaAlta.ToString("dd-MM-yyyy");
+                txtRegistro.Text = cliente.FechaAlta.ToString("yyyy-MM-dd");
                 chkActivo.Checked = cliente.Activo;
             }
             else
