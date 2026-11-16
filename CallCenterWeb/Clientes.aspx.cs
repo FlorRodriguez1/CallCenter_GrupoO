@@ -26,6 +26,7 @@ namespace CallCenterWeb
 
         private void CargarGrilla()
         {
+            lblInfo.Visible = false;
             dgvClientes.DataSource = new ClienteNegocio().Listar();
             dgvClientes.DataBind();
         }
@@ -43,14 +44,14 @@ namespace CallCenterWeb
         {
             if (ddlEstado.SelectedValue == "1") {
                 dgvClientes.DataSource = new ClienteNegocio().ListarPorEstado(true);
-            }else if (ddlEstado.SelectedValue == "0")
+            } else if (ddlEstado.SelectedValue == "0")
             {
                 dgvClientes.DataSource = new ClienteNegocio().ListarPorEstado(false);
             }
             else
             {
                 CargarGrilla();
-                return; 
+                return;
             }
 
             dgvClientes.DataBind();
@@ -58,24 +59,68 @@ namespace CallCenterWeb
 
         protected void txtBuscar_TextChanged(object sender, EventArgs e)
         {
+
+            if (ddlFiltro.SelectedIndex == 0 || string.IsNullOrWhiteSpace(txtBuscar.Text)) {
+                return;
+            }
+
             List<Cliente> lista = new ClienteNegocio().Listar();
+            List<Cliente> listaFiltrada = null;
+            string busqueda = txtBuscar.Text.Trim();
 
-            bool esNumero = Regex.IsMatch(txtBuscar.Text, @"\d+");
+            bool esNumero = Regex.IsMatch(busqueda, @"\d+");
 
-            if (esNumero)
+            if (ddlFiltro.SelectedIndex == 1) {
+                
+                if (!esNumero)
+                {
+                    lblInfo.Text = "<strong>¡No!</strong> Debes insertar números.";
+                    lblInfo.CssClass = "alert alert-danger p-3";
+                    lblInfo.Visible = true;
+                }
+
+                listaFiltrada = lista.FindAll(x => x.DNI.Contains(busqueda));
+            }
+
+            if (ddlFiltro.SelectedIndex == 2) {
+
+                if (esNumero)
+                {
+                    lblInfo.Text = "<strong>¡No!</strong> Debes insertar letras.";
+                    lblInfo.CssClass = "alert alert-danger p-3";
+                    lblInfo.Visible = true;
+                }
+
+                listaFiltrada = lista.FindAll(x => x.Nombre.ToUpper().Contains(busqueda.ToUpper()));
+            }
+
+            if(ddlFiltro.SelectedIndex == 3)
             {
-                List<Cliente> listaFiltrada = lista.FindAll(x => x.DNI.ToUpper().Contains(txtBuscar.Text.ToUpper()));
+                if (esNumero)
+                {
+                    lblInfo.Text = "<strong>¡No!</strong> Debes insertar letras.";
+                    lblInfo.CssClass = "alert alert-danger p-3";
+                    lblInfo.Visible = true;
+                }
+
+                listaFiltrada = lista.FindAll(x => x.Apellido.ToUpper().Contains(busqueda.ToUpper()));
+            }
+
+            if (listaFiltrada != null)
+            {
                 dgvClientes.DataSource = listaFiltrada;
                 dgvClientes.DataBind();
             }
-            else
+            return;
+        }
+
+        protected void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            if(lblInfo.Visible == true)
             {
-                List<Cliente> listaFiltrada = lista.FindAll(x => x.Nombre.ToUpper().Contains(txtBuscar.Text.ToUpper()));
-                dgvClientes.DataSource = listaFiltrada;
-                dgvClientes.DataBind(); 
+                CargarGrilla();
             }
-
-
+            return;
         }
     }
 }

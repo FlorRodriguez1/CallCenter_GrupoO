@@ -60,8 +60,14 @@
         <div class="row mb-3">
             <div class="col-md-6">
                 <div class="input-group">
-                    <asp:TextBox ID="txtBuscar" runat="server" CssClass="form-control" AutoPostBack="true" placeholder="Buscar por DNI, nombre o apellido..." OnTextChanged="txtBuscar_TextChanged" />
-                    <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-outline-secondary" />
+                    <asp:TextBox ID="txtBuscar" runat="server" CssClass="form-control" AutoPostBack="true" placeholder="Buscar..." OnTextChanged="txtBuscar_TextChanged" />
+                    <asp:DropDownList ID="ddlFiltro" runat="server" CssClass="form-select">
+                        <asp:ListItem Text="Sin filtro" Value="0" />
+                        <asp:ListItem Text="DNI" Value="1" />
+                        <asp:ListItem Text="Nombre" Value="2" />
+                        <asp:ListItem Text="Apellido" Value="3" />
+                    </asp:DropDownList>
+                    <asp:Button ID="btnLimpiar" type="button" class="btn btn-dark" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" />
                 </div>
             </div>
             <div class="col-md-3 ms-auto">
@@ -95,6 +101,7 @@
                     ControlStyle-CssClass="btn btn-outline-primary btn-sm" />
             </Columns>
         </asp:GridView>
+        <asp:Label runat="server" ID="lblInfo" Text=""></asp:Label>
     </div>
 </div>
 
