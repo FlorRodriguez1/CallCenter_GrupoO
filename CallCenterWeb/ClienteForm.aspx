@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="Ficha de Cliente" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ClienteForm.aspx.cs" Inherits="CallCenterWeb.WebForm1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center"></div>
     <div class="col-lg-8">
     <!-- Encabezado -->
 <div class="d-flex justify-content-between align-items-center mt-4 mb-4">
@@ -36,6 +36,18 @@
                 <asp:TextBox ID="txtApellido" runat="server" CssClass="form-control" />
             </div>
         </div>
+        <!-- Nacimiento - Alta
+        <div class="row mb-4">
+             <div class="col-md-6">
+                <label class="form-label">Fecha de nacimiento <span class="text-danger">*</span></label>
+                <asp:TextBox ID="txtNacimiento" runat="server" CssClass="form-control" TextMode="Date"/>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Fecha de registro <span class="text-danger">*</span></label>
+                <asp:TextBox ID="txtRegistro" runat="server" CssClass="form-control" TextMode="DateTime"/>
+            </div>
+        </div>  
+        --> 
 
         <!-- Contacto -->
         <h5 class="mb-3">Datos de contacto</h5>
