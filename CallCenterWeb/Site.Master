@@ -56,8 +56,8 @@
                 <li class="nav-item"><a class="nav-link" runat="server" href="~/">Inicio</a></li>
                 <li class="nav-item"><a class="nav-link" runat="server" href="~/Clientes">Clientes</a></li>
                 <li class="nav-item"><a class="nav-link" runat="server" href="~/Incidencias">Incidencias</a></li>
-                <li class="nav-item"><a class="nav-link" runat="server" href="~/Reaperturas">Reaperturas</a></li>
-                <li class="nav-item dropdown">
+                <li id="liReaperturas" runat="server" class="nav-item"><a class="nav-link" runat="server" href="~/Reaperturas">Reaperturas</a></li>
+                <li id="liAdministracion" runat="server" class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Administración</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" runat="server" href="~/Usuarios">Usuarios</a></li>
@@ -70,11 +70,12 @@
             <!-- Usuario y salir -->
             <div class="d-flex align-items-center">
                 <div class="text-end me-3">
-                    <div class="fw-bold">Usuario</div>
-                    <span class="badge bg-primary">Supervisor</span>
+                    <div class="fw-bold"><asp:Label ID="lblNombreUsuario" runat="server" /></div>
+                    <span class="badge bg-primary"><asp:Label ID="lblPerfil" runat="server" /></span>
                 </div>
-                <a class="btn btn-outline-secondary btn-sm" href="#">Salir</a>
+                <asp:Button ID="btnSalir" runat="server" Text="Salir" CssClass="btn btn-outline-secondary btn-sm" OnClick="btnSalir_Click" CausesValidation="false" />
             </div>
+        
         </div>
     </div>
 </nav>

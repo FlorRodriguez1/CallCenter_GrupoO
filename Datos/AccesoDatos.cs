@@ -12,7 +12,7 @@ namespace Datos
         private SqlDataReader lector;
 
         // Se prueban en orden; se usa la primera que logre conectarse
-        private static readonly string[] nombresConexion = { "CallCenterDB", "CallCenterDBLocal" };
+        private static readonly string[] nombresConexion = { "CALLCENTERDB", "CallCenterDBLocal" };
 
         public SqlDataReader Lector
         {

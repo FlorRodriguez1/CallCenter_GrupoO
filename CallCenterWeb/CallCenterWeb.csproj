@@ -120,9 +120,11 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="IncidenciaForm.aspx" />
+    <Content Include="Login.aspx" />
     <Content Include="Prioridades.aspx" />
     <Content Include="PrioridadForm.aspx" />
     <Content Include="Reaperturas.aspx" />
+    <Content Include="Registro.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -209,6 +211,13 @@
     <Compile Include="IncidenciaForm.aspx.designer.cs">
       <DependentUpon>IncidenciaForm.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Prioridades.aspx.cs">
       <DependentUpon>Prioridades.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -230,6 +239,13 @@
     </Compile>
     <Compile Include="Reaperturas.aspx.designer.cs">
       <DependentUpon>Reaperturas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Registro.aspx.cs">
+      <DependentUpon>Registro.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Registro.aspx.designer.cs">
+      <DependentUpon>Registro.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
