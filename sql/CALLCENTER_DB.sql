@@ -159,12 +159,15 @@ INSERT INTO Usuarios (NombreUsuario, Clave, Nombre, Apellido, Email, IdPerfil) V
 (N'admin',        N'ADMIN123', N'Ana',   N'Gómez', N'admin@callcenter.test',        1),
 (N'telefonista1', N'TELEFON123', N'Bruno', N'Pérez', N'telefonista1@callcenter.test', 2),
 (N'telefonista2', N'TELEFON123', N'Carla', N'Díaz',  N'telefonista2@callcenter.test', 2),
-(N'supervisor',   N'SUPER123', N'Diego', N'López', N'supervisor@callcenter.test',   3);
+(N'telefonista3', N'TELEFON123', N'Gaston', N'Rios',  N'telefonista3@callcenter.test', 2),
+(N'telefonista4', N'TELEFON123', N'Paula', N'Garay',  N'telefonista4@callcenter.test', 2),
+(N'supervisor1',   N'SUPER123', N'Diego', N'López', N'supervisor1@callcenter.test',   3),
+(N'supervisor2',   N'SUPER123', N'Cintia', N'diaz', N'supervisor2@callcenter.test',   3);
 
 INSERT INTO Clientes (DNI, Nombre, Apellido, Email, Telefono, FechaAlta) VALUES
-(N'30111222', N'Laura',   N'Fernández', N'laura.fernandez@example.com', N'11-4000-1111', '2026-11-15'),
+(N'30111222', N'Laura',   N'Fernández', N'laura.fernandez@example.com', N'11-4000-1111', '2026-10-15'),
 (N'28333444', N'Martín',  N'Suárez',    N'martin.suarez@example.com',   N'11-4000-2222', '2026-11-15'),
-(N'35555666', N'Sofía',   N'Romero',    N'sofia.romero@example.com',    N'11-4000-3333', '2026-11-15'),
+(N'35555666', N'Sofía',   N'Romero',    N'sofia.romero@example.com',    N'11-4000-3333', '2026-09-15'),
 (N'27777888', N'Javier',  N'Torres',    N'javier.torres@example.com',   N'11-4000-4444', '2026-11-15'),
 (N'33999000', N'Valeria', N'Acosta',    N'valeria.acosta@example.com',  NULL,           '2026-11-15');
 
