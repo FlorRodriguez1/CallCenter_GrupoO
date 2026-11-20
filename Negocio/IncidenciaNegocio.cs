@@ -10,6 +10,8 @@ namespace Negocio
 {
     public class IncidenciaNegocio
     {
+
+
         public int Agregar(Incidencia nueva)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -40,6 +42,29 @@ namespace Negocio
             }
         }
 
+        public List<Incidencia> Listar()
+        {
+            List<Incidencia> lista = new List<Incidencia>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearConsulta("SELECT * FROM VW_Incidencias ORDER BY IdIncidencia DESC");
+                datos.EjecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    lista.Add(LeerIncidencia(datos));
+                }
+
+                return lista;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
         public List<Incidencia> Filtrar(int? idIncidencia, int? idEstado, int? idTipo, int? idPrioridad)
         {
             List<Incidencia> lista = new List<Incidencia>();
@@ -57,46 +82,7 @@ namespace Negocio
 
                 while (datos.Lector.Read())
                 {
-                    Incidencia aux = new Incidencia();
-                    aux.IdIncidencia = (int)datos.Lector["IdIncidencia"];
-                    aux.Problematica = (string)datos.Lector["Problematica"];
-                    aux.FechaCreacion = (DateTime)datos.Lector["FechaCreacion"];
-                    aux.Estado = (EstadoIncidencia)(int)datos.Lector["IdEstado"];
-
-                    if (!(datos.Lector["FechaResolucion"] is DBNull))
-                        aux.FechaResolucion = (DateTime)datos.Lector["FechaResolucion"];
-
-                    if (!(datos.Lector["FechaCierre"] is DBNull))
-                        aux.FechaCierre = (DateTime)datos.Lector["FechaCierre"];
-
-                    if (!(datos.Lector["ComentarioRespuesta"] is DBNull))
-                        aux.ComentarioRespuesta = (string)datos.Lector["ComentarioRespuesta"];
-
-                    if (!(datos.Lector["ComentarioCierre"] is DBNull))
-                        aux.ComentarioCierre = (string)datos.Lector["ComentarioCierre"];
-
-                    aux.Cliente = new Cliente();
-                    aux.Cliente.IdCliente = (int)datos.Lector["IdCliente"];
-                    aux.Cliente.Nombre = (string)datos.Lector["Cliente"];
-                    aux.Cliente.Email = (string)datos.Lector["EmailCliente"];
-
-                    aux.Tipo = new TipoIncidencia();
-                    aux.Tipo.IdTipo = (int)datos.Lector["IdTipo"];
-                    aux.Tipo.Descripcion = (string)datos.Lector["Tipo"];
-
-                    aux.Prioridad = new Prioridad();
-                    aux.Prioridad.IdPrioridad = (int)datos.Lector["IdPrioridad"];
-                    aux.Prioridad.Descripcion = (string)datos.Lector["Prioridad"];
-
-                    aux.UsuarioCreador = new Usuario();
-                    aux.UsuarioCreador.IdUsuario = (int)datos.Lector["IdUsuarioCreador"];
-                    aux.UsuarioCreador.Nombre = (string)datos.Lector["UsuarioCreador"];
-
-                    aux.UsuarioAsignado = new Usuario();
-                    aux.UsuarioAsignado.IdUsuario = (int)datos.Lector["IdUsuarioAsignado"];
-                    aux.UsuarioAsignado.Nombre = (string)datos.Lector["UsuarioAsignado"];
-
-                    lista.Add(aux);
+                    lista.Add(LeerIncidencia(datos));
                 }
 
                 return lista;
@@ -106,5 +92,50 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
+
+        private Incidencia LeerIncidencia(AccesoDatos datos)
+        {
+            Incidencia aux = new Incidencia();
+            aux.IdIncidencia = (int)datos.Lector["IdIncidencia"];
+            aux.Problematica = datos.Lector["Problematica"] is DBNull ? string.Empty : (string)datos.Lector["Problematica"];
+            aux.FechaCreacion = (DateTime)datos.Lector["FechaCreacion"];
+            aux.Estado = (EstadoIncidencia)(int)datos.Lector["IdEstado"];
+
+            if (!(datos.Lector["FechaResolucion"] is DBNull))
+                aux.FechaResolucion = (DateTime)datos.Lector["FechaResolucion"];
+
+            if (!(datos.Lector["FechaCierre"] is DBNull))
+                aux.FechaCierre = (DateTime)datos.Lector["FechaCierre"];
+
+            if (!(datos.Lector["ComentarioRespuesta"] is DBNull))
+                aux.ComentarioRespuesta = (string)datos.Lector["ComentarioRespuesta"];
+
+            if (!(datos.Lector["ComentarioCierre"] is DBNull))
+                aux.ComentarioCierre = (string)datos.Lector["ComentarioCierre"];
+
+            aux.Cliente = new Cliente();
+            aux.Cliente.IdCliente = (int)datos.Lector["IdCliente"];
+            aux.Cliente.Nombre = datos.Lector["Cliente"] is DBNull ? string.Empty : (string)datos.Lector["Cliente"];
+            aux.Cliente.Email = datos.Lector["EmailCliente"] is DBNull ? string.Empty : (string)datos.Lector["EmailCliente"];
+
+            aux.Tipo = new TipoIncidencia();
+            aux.Tipo.IdTipo = (int)datos.Lector["IdTipo"];
+            aux.Tipo.Descripcion = datos.Lector["Tipo"] is DBNull ? string.Empty : (string)datos.Lector["Tipo"];
+
+            aux.Prioridad = new Prioridad();
+            aux.Prioridad.IdPrioridad = (int)datos.Lector["IdPrioridad"];
+            aux.Prioridad.Descripcion = datos.Lector["Prioridad"] is DBNull ? string.Empty : (string)datos.Lector["Prioridad"];
+
+            aux.UsuarioCreador = new Usuario();
+            aux.UsuarioCreador.IdUsuario = (int)datos.Lector["IdUsuarioCreador"];
+            aux.UsuarioCreador.Nombre = datos.Lector["UsuarioCreador"] is DBNull ? string.Empty : (string)datos.Lector["UsuarioCreador"];
+
+            aux.UsuarioAsignado = new Usuario();
+            aux.UsuarioAsignado.IdUsuario = (int)datos.Lector["IdUsuarioAsignado"];
+            aux.UsuarioAsignado.Nombre = datos.Lector["UsuarioAsignado"] is DBNull ? string.Empty : (string)datos.Lector["UsuarioAsignado"];
+
+            return aux;
+        }
+
     }
 }

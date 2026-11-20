@@ -76,64 +76,48 @@
                 <asp:Button ID="btnFiltrar" runat="server" Text="Filtrar" CssClass="btn btn-primary w-100" OnClick="btnFiltrar_Click" />
             </div>
         </div>
-        
     </div>
-
-    <hr />
-    <asp:GridView ID="dgvIncidencias" runat="server"></asp:GridView>
-    
 </div>
 
 <!-- Grilla -->
 <div class="card shadow-sm mb-4">
     <div class="card-body">
-        <table class="table table-hover align-middle">
-            <thead class="table-light">
-                <tr>
-                    <th>N°</th>
-                    <th>Cliente</th>
-                    <th>Tipo</th>
-                    <th>Prioridad</th>
-                    <th>Estado</th>
-                    <th>Asignado a</th>
-                    <th>Fecha</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <%--reemplazar por un GridView que lea de la vista VW_Incidencias--%>
-                    <td class="fw-bold">#1</td>
-                    <td>Valeria Acosta<br /><small class="text-muted">DNI 30123456</small></td>
-                    <td>Facturación</td>
-                    <td><span class="badge bg-danger">Crítica</span></td>
-                    <td><span class="badge bg-warning text-dark">En análisis</span></td>
-                    <td>telefonista1</td>
-                    <td><small>29/10/2026</small></td>
-                    <td><a class="btn btn-outline-primary btn-sm" runat="server" href="~/IncidenciaForm.aspx?id=1">Ver</a></td>
-                </tr>
-                <tr>
-                    <td class="fw-bold">#2</td>
-                    <td>Juan Pérez<br /><small class="text-muted">DNI 28555444</small></td>
-                    <td>Técnico</td>
-                    <td><span class="badge bg-warning text-dark">Alta</span></td>
-                    <td><span class="badge bg-primary">Abierto</span></td>
-                    <td>telefonista2</td>
-                    <td><small>30/10/2026</small></td>
-                    <td><a class="btn btn-outline-primary btn-sm" runat="server" href="~/IncidenciaForm.aspx?id=2">Ver</a></td>
-                </tr>
-                <tr>
-                    <td class="fw-bold">#3</td>
-                    <td>María Gómez<br /><small class="text-muted">DNI 35111222</small></td>
-                    <td>Reclamo</td>
-                    <td><span class="badge bg-secondary">Media</span></td>
-                    <td><span class="badge bg-success">Resuelto</span></td>
-                    <td>telefonista1</td>
-                    <td><small>31/10/2026</small></td>
-                    <td><a class="btn btn-outline-primary btn-sm" runat="server" href="~/IncidenciaForm.aspx?id=3">Ver</a></td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <asp:GridView ID="dgvIncidencias" runat="server" AutoGenerateColumns="false" CssClass="table table-hover align-middle mb-0" GridLines="None" DataKeyNames="IdIncidencia" AllowPaging="true" PageSize="10" EmptyDataText="No hay incidencias para mostrar." OnPageIndexChanging="dgvIncidencias_PageIndexChanging">
+                <HeaderStyle CssClass="table-light" />
+                <PagerStyle CssClass="pt-3" HorizontalAlign="Center" />
+                <Columns>
+                    <asp:BoundField HeaderText="N°" DataField="IdIncidencia">
+                        <ItemStyle Width="70px" />
+                    </asp:BoundField>
+                    <asp:BoundField HeaderText="Cliente" DataField="Cliente.Nombre" />
+                    <asp:BoundField HeaderText="Tipo" DataField="Tipo.Descripcion" />
+                    <asp:TemplateField HeaderText="Prioridad">
+                        <ItemTemplate>
+                            <span class='<%# Convert.ToInt32(Eval("Prioridad.IdPrioridad")) == 1 ? "badge bg-danger px-3 py-2" : (Convert.ToInt32(Eval("Prioridad.IdPrioridad")) == 2 ? "badge bg-warning text-dark px-3 py-2" : "badge bg-secondary px-3 py-2") %>'>
+                                <%# Eval("Prioridad.Descripcion") %>
+                            </span>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Estado">
+                        <ItemTemplate>
+                            <span class='<%# Eval("Estado").ToString() == "EnAnalisis" ? "badge bg-info text-dark px-3 py-2" : (Eval("Estado").ToString() == "Reabierto" ? "badge bg-danger px-3 py-2" : (Eval("Estado").ToString() == "Abierto" ? "badge bg-primary px-3 py-2" : "badge bg-success px-3 py-2")) %>'>
+                                <%# Eval("Estado").ToString() == "EnAnalisis" ? "En análisis" : Eval("Estado").ToString() %>
+                            </span>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Asignado a">
+                        <ItemTemplate>
+                            <%# string.IsNullOrWhiteSpace(Eval("UsuarioAsignado.Nombre") as string) ? "<span class=\"text-muted fst-italic\">Sin asignar</span>" : Eval("UsuarioAsignado.Nombre") %>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:HyperLinkField Text="Detalle" DataNavigateUrlFields="IdIncidencia" DataNavigateUrlFormatString="~/IncidenciaForm.aspx?id={0}" ControlStyle-CssClass="btn btn-outline-primary btn-sm">
+                        <ItemStyle CssClass="text-end" Width="100px" />
+                    </asp:HyperLinkField>
+                </Columns>
+            </asp:GridView>
+        </div>
+        <asp:Label runat="server" ID="lblInfo" CssClass="d-block mt-2 text-muted small" Text=""></asp:Label>
     </div>
 </div>
 </asp:Content>

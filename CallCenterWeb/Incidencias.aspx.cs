@@ -37,6 +37,7 @@ namespace CallCenterWeb
                 ddlPrioridad.DataSource = prioridadNegocio.Listar();
                 ddlPrioridad.DataBind();
 
+                CargarGrilla();
                 RellenarEstadisticas();
             }
             catch (Exception ex)
@@ -52,6 +53,19 @@ namespace CallCenterWeb
             litAbiertas.Text = stats.Abiertas.ToString();
             litAnalisis.Text = stats.Analisis.ToString();
             litResueltas.Text = stats.Resueltas.ToString();
+        }
+
+        private void CargarGrilla()
+        {
+            IncidenciaNegocio negocio = new IncidenciaNegocio();
+            dgvIncidencias.DataSource = negocio.Listar();
+            dgvIncidencias.DataBind();
+        }
+
+        protected void dgvIncidencias_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            dgvIncidencias.PageIndex = e.NewPageIndex;
+            CargarGrilla();
         }
 
         protected void btnFiltrar_Click(object sender, EventArgs e)
