@@ -145,8 +145,9 @@ GO
 
 INSERT INTO TiposIncidencia (Descripcion) VALUES
 (N'Facturación'),
-(N'Problema técnico'),
-(N'Consulta comercial'),
+(N'Corte de Servicio'),
+(N'Baja Velocidad'),
+(N'Cambio de Plan'),
 (N'Otro');
 
 INSERT INTO Prioridades (Descripcion) VALUES
