@@ -16,9 +16,13 @@
                     <div class="card shadow-sm">
                         <div class="card-body p-4">
                             <div class="text-center mb-4">
-                                <h3 class="fw-bold text-primary mb-0">CallCenter</h3>
-                                <small class="text-muted">GESTIÓN DE RECLAMOS</small>
-                            </div>
+                                <h3 class="fw-bold text-primary mb-4">CallCenter</h3>
+                                <div class="d-flex  gap-3">
+    
+    <h5 class="text-black mb-0">FibraNet</h5>
+    <p class="text-info"><em>Internet de alta velocidad</em></p>
+</div>
+
 
                             <asp:Label ID="lblError" runat="server" CssClass="alert alert-danger d-block" Visible="false" />
 

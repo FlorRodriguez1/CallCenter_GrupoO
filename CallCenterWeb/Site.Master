@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %> - CallCenter - Gestión de Reclamos</title>
+    <title><%: Page.Title %> - CallCenter - FibraNet</title>
 
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
@@ -42,8 +42,9 @@
     <div class="container">
         <!-- Logo -->
         <a class="navbar-brand fw-bold text-primary" runat="server" href="~/">
-            CallCenter
-            <small class="d-block text-muted" style="font-size: 10px;">RECLAMOS</small>
+             Fibranet
+            <small class="text-info"><em>Internet de alta velocidad</em></small>
+            <small class="d-block text-muted" style="font-size: 10px;">CallCenter</small>
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
@@ -68,8 +69,8 @@
             </ul>
 
             <!-- Usuario y salir -->
-            <div class="d-flex align-items-center">
-                <div class="text-end me-3">
+            <div class="d-flex align-items-center ">
+                <div class="text-end me-3 p-2 border border-primary rounded ">
                     <div class="fw-bold"><asp:Label ID="lblNombreUsuario" runat="server" /></div>
                     <span class="badge bg-primary"><asp:Label ID="lblPerfil" runat="server" /></span>
                 </div>
