@@ -12,7 +12,7 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <p class="text-muted small mb-1">PENDIENTES DE REVISIÓN</p>
-                <h3 class="text-danger">2</h3>
+                <h3 class="text-danger"><asp:Literal ID="litPendientes" runat="server" /></h3>
                 <p class="small mb-0">Esperan respuesta del supervisor</p>
             </div>
         </div>
@@ -21,7 +21,7 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <p class="text-muted small mb-1">APROBADAS</p>
-                <h3 class="text-success">1</h3>
+                <h3 class="text-success"><asp:Literal ID="litAprobadas" runat="server" /></h3>
                 <p class="small mb-0">Incidencias reabiertas</p>
             </div>
         </div>
@@ -30,7 +30,7 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <p class="text-muted small mb-1">RECHAZADAS</p>
-                <h3>0</h3>
+                <h3><asp:Literal ID="litRechazadas" runat="server" /></h3>
                 <p class="small mb-0">Con motivo registrado en el historial</p>
             </div>
         </div>
@@ -55,76 +55,89 @@
                 </asp:DropDownList>
             </div>
             <div class="col-md-3 mb-2">
-                <asp:Button ID="btnFiltrar" runat="server" Text="Filtrar" CssClass="btn btn-primary w-100" />
+                <asp:Button ID="btnFiltrar" runat="server" Text="Filtrar" CssClass="btn btn-primary w-100" OnClick="btnFiltrar_Click" />
             </div>
         </div>
     </div>
 </div>
 
 <!-- Grilla -->
+<!-- Mensaje -->
+<asp:Label ID="lblMensaje" runat="server" Visible="false" />
+
+<!-- Recuadro para rechazar -->
+<asp:Panel ID="pnlRechazar" runat="server" Visible="false" CssClass="card shadow-sm mb-4 border-danger">
+    <div class="card-body">
+        <h5 class="mb-3">Rechazar solicitud</h5>
+        <asp:HiddenField ID="hfIdSolicitud" runat="server" />
+        <label class="form-label">Motivo del rechazo <span class="text-danger">*</span></label>
+        <asp:TextBox ID="txtComentarioRechazo" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="3" MaxLength="1000" />
+        <small class="text-muted">La incidencia queda en su estado actual y el motivo se guarda en el historial.</small>
+        <div class="mt-3">
+            <asp:Button ID="btnConfirmarRechazo" runat="server" Text="Rechazar" CssClass="btn btn-danger" OnClick="btnConfirmarRechazo_Click" />
+            <asp:Button ID="btnCancelarRechazo" runat="server" Text="Cancelar" CssClass="btn btn-outline-secondary" OnClick="btnCancelarRechazo_Click" />
+        </div>
+    </div>
+</asp:Panel>
+
+<!-- Grilla -->
 <div class="card shadow-sm mb-4">
     <div class="card-body">
-        <h5 class="mb-3">Solicitudes pendientes</h5>
-        <table class="table align-middle">
-            <thead class="table-light">
-                <tr>
-                    <th>N°</th>
-                    <th>Cliente</th>
-                    <th>Estado actual</th>
-                    <th>Solicitado por</th>
-                    <th>Motivo</th>
-                    <th>Fecha</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><a runat="server" href="~/IncidenciaForm.aspx?id=3" class="fw-bold">#3</a></td>
-                    <td>María Gómez<br /><small class="text-muted">DNI 35111222</small></td>
-                    <td><span class="badge bg-success">Resuelto</span></td>
-                    <td>telefonista1</td>
-                    <td class="small">El cliente volvió a llamar: el problema sigue igual wetc etc...</td>
-                    <td><small>31/10/2026<br />10:15</small></td>
-                    <td class="text-nowrap">
-                        <button type="button" class="btn btn-success btn-sm">Aprobar</button>
-                        <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalRechazar">Rechazar</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td><a runat="server" href="~/IncidenciaForm.aspx?id=1" class="fw-bold">#1</a></td>
-                    <td>Valeria Acosta<br /><small class="text-muted">DNI 30123456</small></td>
-                    <td><span class="badge bg-dark">Cerrado</span></td>
-                    <td>telefonista2</td>
-                    <td class="small">Se cerró asdasddd..........</td>
-                    <td><small>01/11/2026<br />09:30</small></td>
-                    <td class="text-nowrap">
-                        <button type="button" class="btn btn-success btn-sm">Aprobar</button>
-                        <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalRechazar">Rechazar</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+        <h5 class="mb-3">Solicitudes</h5>
 
-<!-- Modal Rechazar -->
-<div class="modal fade" id="modalRechazar" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Rechazar solicitud</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <label class="form-label">Motivo del rechazo <span class="text-danger">*</span></label>
-                <asp:TextBox ID="txtComentarioRechazo" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="4" />
-                <small class="text-muted">La incidencia queda en su estado actual y el motivo se guarda en el historial.</small>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <asp:Button ID="btnRechazar" runat="server" Text="Rechazar" CssClass="btn btn-danger" />
-            </div>
-        </div>
+        <asp:GridView ID="dgvSolicitudes" runat="server" AutoGenerateColumns="false"
+            CssClass="table align-middle" GridLines="None"
+            EmptyDataText="No hay solicitudes para mostrar."
+            OnRowCommand="dgvSolicitudes_RowCommand">
+            <HeaderStyle CssClass="table-light" />
+            <Columns>
+                <asp:TemplateField HeaderText="N°">
+                    <ItemTemplate>
+                        <a href='<%# "IncidenciaForm.aspx?id=" + Eval("Incidencia.IdIncidencia") %>' class="fw-bold">#<%# Eval("Incidencia.IdIncidencia") %></a>
+                    </ItemTemplate>
+                </asp:TemplateField>
+
+                <asp:TemplateField HeaderText="Cliente">
+                    <ItemTemplate>
+                        <%# Eval("Incidencia.Cliente.Nombre") %> <%# Eval("Incidencia.Cliente.Apellido") %><br />
+                        <small class="text-muted">DNI <%# Eval("Incidencia.Cliente.DNI") %></small>
+                    </ItemTemplate>
+                </asp:TemplateField>
+
+                <asp:TemplateField HeaderText="Estado actual">
+                    <ItemTemplate>
+                        <span class='<%# ClaseEstado(Eval("Incidencia.Estado")) %>'><%# TextoEstado(Eval("Incidencia.Estado")) %></span>
+                    </ItemTemplate>
+                </asp:TemplateField>
+
+                <asp:TemplateField HeaderText="Solicitado por">
+                    <ItemTemplate><%# Eval("Solicitante.NombreUsuario") %></ItemTemplate>
+                </asp:TemplateField>
+
+                <asp:BoundField DataField="Motivo" HeaderText="Motivo" ItemStyle-CssClass="small" />
+
+                <asp:BoundField DataField="FechaSolicitud" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy HH:mm}" ItemStyle-CssClass="small" />
+
+                <asp:TemplateField HeaderText="Solicitud">
+                    <ItemTemplate>
+                        <span class='<%# ClaseSolicitud(Eval("Estado")) %>'><%# Eval("Estado") %></span>
+                    </ItemTemplate>
+                </asp:TemplateField>
+
+                <asp:TemplateField ItemStyle-CssClass="text-nowrap">
+                    <ItemTemplate>
+                        <asp:Button ID="btnAprobar" runat="server" Text="Aprobar" CssClass="btn btn-success btn-sm"
+                            CommandName="Aprobar" CommandArgument='<%# Eval("IdSolicitud") %>'
+                            Visible='<%# EsPendiente(Eval("Estado")) %>'
+                            OnClientClick="return confirm('¿Aprobar la reapertura?');" />
+                        <asp:Button ID="btnRechazarFila" runat="server" Text="Rechazar" CssClass="btn btn-outline-danger btn-sm"
+                            CommandName="Rechazar" CommandArgument='<%# Eval("IdSolicitud") %>'
+                            Visible='<%# EsPendiente(Eval("Estado")) %>' />
+                    </ItemTemplate>
+                </asp:TemplateField>
+            </Columns>
+        </asp:GridView>
     </div>
 </div>
 </asp:Content>
+

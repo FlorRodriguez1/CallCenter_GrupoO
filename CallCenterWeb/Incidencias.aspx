@@ -49,7 +49,7 @@
 <div class="card shadow-sm mb-4">
     <div class="card-body">
         <h6 class="mb-3">Búsqueda de incidencias</h6>
-        <div class="row align-items-end">
+        <asp:Panel ID="pnlFiltros" runat="server" CssClass="row align-items-end" DefaultButton="btnFiltrar">
             <div class="col-md-3 mb-2">
                 <label class="form-label small">N° de incidencia</label>
                 <asp:TextBox ID="txtNumero" runat="server" CssClass="form-control" placeholder="Ej: 15" />
@@ -75,7 +75,7 @@
             <div class="col-md-2 mb-2">
                 <asp:Button ID="btnFiltrar" runat="server" Text="Filtrar" CssClass="btn btn-primary w-100" OnClick="btnFiltrar_Click" />
             </div>
-        </div>
+        </asp:Panel>
     </div>
 </div>
 

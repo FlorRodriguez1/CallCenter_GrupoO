@@ -74,7 +74,7 @@
                     <div class="fw-bold"><asp:Label ID="lblNombreUsuario" runat="server" /></div>
                     <span class="badge bg-primary"><asp:Label ID="lblPerfil" runat="server" /></span>
                 </div>
-                <asp:Button ID="btnSalir" runat="server" Text="Salir" CssClass="btn btn-outline-secondary btn-sm" OnClick="btnSalir_Click" CausesValidation="false" />
+                <asp:Button ID="btnSalir" runat="server" Text="Salir" CssClass="btn btn-outline-secondary btn-sm" OnClick="btnSalir_Click" CausesValidation="false" UseSubmitBehavior="false" />
             </div>
         
         </div>

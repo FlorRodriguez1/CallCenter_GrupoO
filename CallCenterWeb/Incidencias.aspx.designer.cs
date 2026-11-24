@@ -51,6 +51,15 @@ namespace CallCenterWeb
         protected global::System.Web.UI.WebControls.Literal litResueltas;
 
         /// <summary>
+        /// Control pnlFiltros.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlFiltros;
+
+        /// <summary>
         /// Control txtNumero.
         /// </summary>
         /// <remarks>
