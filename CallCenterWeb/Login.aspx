@@ -18,10 +18,11 @@
                             <div class="text-center mb-4">
                                 <h3 class="fw-bold text-primary mb-4">CallCenter</h3>
                                 <div class="d-flex  gap-3">
-    
-    <h5 class="text-black mb-0">FibraNet</h5>
-    <p class="text-info"><em>Internet de alta velocidad</em></p>
-</div>
+
+                                    <h5 class="text-black mb-0">FibraNet</h5>
+                                    <p class="text-info"><em>Internet de alta velocidad</em></p>
+                                </div>
+                            </div>
 
 
                             <asp:Label ID="lblError" runat="server" CssClass="alert alert-danger d-block" Visible="false" />
@@ -38,7 +39,7 @@
 
                             <div class="d-grid gap-2">
                                 <asp:Button ID="btnIngresar" runat="server" Text="Ingresar" CssClass="btn btn-primary" OnClick="btnIngresar_Click" />
-                                <a href="Registro.aspx" class="btn btn-outline-secondary">Crear cuenta</a>
+
                             </div>
                         </div>
                     </div>

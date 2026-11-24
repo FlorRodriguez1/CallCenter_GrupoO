@@ -19,6 +19,11 @@ namespace CallCenterWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Seguridad.EsAdministrador(Session["Usuario"]))
+            {
+                Response.Redirect("Default.aspx", false);
+                return;
+            }
             if (IsPostBack)
                 return;
 
