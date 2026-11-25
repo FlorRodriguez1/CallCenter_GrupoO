@@ -56,6 +56,13 @@ namespace CallCenterWeb
                 return;
             }
 
+            if (new TipoIncidenciaNegocio().ExisteDescripcion(txtDescripcion.Text.Trim(), IdTipo))
+            {
+                lblMensaje.Text = "Ya existe un tipo de incidencia con esa descripción.";
+                lblMensaje.Visible = true;
+                return;
+            }
+
             try
             {
                 TipoIncidencia tipo = new TipoIncidencia();

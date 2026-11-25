@@ -55,6 +55,12 @@ namespace CallCenterWeb
                 lblMensaje.Visible = true;
                 return;
             }
+            if (new PrioridadNegocio().ExisteDescripcion(txtDescripcion.Text.Trim(), IdPrioridad))
+            {
+                lblMensaje.Text = "Ya existe una prioridad con esa descripción.";
+                lblMensaje.Visible = true;
+                return;
+            }
 
             try
             {

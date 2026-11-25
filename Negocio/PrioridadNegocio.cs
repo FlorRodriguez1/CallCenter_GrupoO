@@ -83,6 +83,29 @@ namespace Negocio
             }
         }
 
+        // true si ya hay OTRA prioridad con esa descripción
+        public bool ExisteDescripcion(string descripcion, int idPrioridadActual)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearConsulta("SELECT COUNT(*) FROM Prioridades WHERE Descripcion = @Descripcion AND IdPrioridad <> @IdPrioridad");
+                datos.SetearParametro("@Descripcion", descripcion);
+                datos.SetearParametro("@IdPrioridad", idPrioridadActual);
+                datos.EjecutarLectura();
+
+                if (datos.Lector.Read())
+                    return (int)datos.Lector[0] > 0;
+
+                return false;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
         private Prioridad LeerPrioridad(AccesoDatos datos)
         {
             Prioridad aux = new Prioridad();

@@ -78,6 +78,18 @@ namespace CallCenterWeb
                 MostrarError("Ingresá una clave para el nuevo usuario.");
                 return;
             }
+            if (!Validaciones.EmailValido(txtEmail.Text.Trim()))
+            {
+                MostrarError("El email no tiene un formato válido.");
+                return;
+            }
+
+            // Si se escribió una clave (alta o cambio), tiene que tener al menos 6 caracteres
+            if (!string.IsNullOrWhiteSpace(txtClave.Text) && txtClave.Text.Length < 6)
+            {
+                MostrarError("La clave tiene que tener al menos 6 caracteres.");
+                return;
+            }
 
             try
             {

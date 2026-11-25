@@ -60,6 +60,24 @@ namespace CallCenterWeb
                 MostrarError("Completá DNI, nombre, apellido y email.");
                 return;
             }
+            if (!Validaciones.DniValido(txtDni.Text.Trim()))
+            {
+                MostrarError("El DNI tiene que tener entre 7 y 8 números, sin puntos.");
+                return;
+            }
+
+            if (!Validaciones.EmailValido(txtEmail.Text.Trim()))
+            {
+                MostrarError("El email no tiene un formato válido.");
+                return;
+            }
+
+            // El teléfono es opcional: se valida solo si se completó
+            if (!string.IsNullOrWhiteSpace(txtTelefono.Text) && !Validaciones.TelefonoValido(txtTelefono.Text.Trim()))
+            {
+                MostrarError("El teléfono solo puede tener números, espacios y guiones.");
+                return;
+            }
 
             try
             {

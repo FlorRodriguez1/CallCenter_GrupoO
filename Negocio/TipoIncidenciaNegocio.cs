@@ -83,6 +83,29 @@ namespace Negocio
             }
         }
 
+        // true si ya hay OTRO tipo con esa descripción
+        public bool ExisteDescripcion(string descripcion, int idTipoActual)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearConsulta("SELECT COUNT(*) FROM TiposIncidencia WHERE Descripcion = @Descripcion AND IdTipo <> @IdTipo");
+                datos.SetearParametro("@Descripcion", descripcion);
+                datos.SetearParametro("@IdTipo", idTipoActual);
+                datos.EjecutarLectura();
+
+                if (datos.Lector.Read())
+                    return (int)datos.Lector[0] > 0;
+
+                return false;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
         private TipoIncidencia LeerTipo(AccesoDatos datos)
         {
             TipoIncidencia aux = new TipoIncidencia();

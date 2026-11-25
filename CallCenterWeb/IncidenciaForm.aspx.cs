@@ -86,7 +86,7 @@ namespace CallCenterWeb
                 litBadgePrioridad.Text = $"<span class=\"badge {cssPrioridad} fs-6\">{inc.Prioridad.Descripcion}</span> ";
             }
 
-            if (inc.Estado != null)
+            
             {
                 string estadoTexto = inc.Estado.ToString();
                 string cssEstado = ObtenerCssEstado(estadoTexto);
