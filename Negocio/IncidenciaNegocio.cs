@@ -131,8 +131,7 @@ namespace Negocio
                 datos.SetearParametro("@IdTipo", inc.Tipo.IdTipo);
                 datos.SetearParametro("@IdPrioridad", inc.Prioridad.IdPrioridad);
                 datos.SetearParametro("@IdEstado", (int)inc.Estado);
-                datos.SetearParametro("@IdUsuarioCreador", inc.UsuarioCreador.IdUsuario);
-                datos.SetearParametro("@IdUsuarioAsignado", inc.UsuarioAsignado.IdUsuario);
+                datos.SetearParametro("@IdIncidencia", inc.IdIncidencia);
                 datos.SetearParametro("@Problematica", inc.Problematica);
 
                 datos.EjecutarLectura();

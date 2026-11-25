@@ -164,6 +164,8 @@ namespace CallCenterWeb
                     };
 
                     int idGenerado = negocio.Agregar(nueva);
+                    new HistorialNegocio().Agregar(idGenerado, usuarioLogueado.IdUsuario,
+                    null, EstadoIncidencia.Abierto, "Alta de la incidencia.");
                     Response.Redirect($"Incidencias.aspx?creada={idGenerado}", false);
                     Context.ApplicationInstance.CompleteRequest();
                 }
