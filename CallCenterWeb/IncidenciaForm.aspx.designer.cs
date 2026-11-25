@@ -15,6 +15,33 @@ namespace CallCenterWeb
     {
 
         /// <summary>
+        /// Control litTituloIncidencia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litTituloIncidencia;
+
+        /// <summary>
+        /// Control litBadgePrioridad.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litBadgePrioridad;
+
+        /// <summary>
+        /// Control litBadgeEstado.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litBadgeEstado;
+
+        /// <summary>
         /// Control pnlAcciones.
         /// </summary>
         /// <remarks>

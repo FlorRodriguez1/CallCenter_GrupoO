@@ -65,6 +65,33 @@ namespace Negocio
             }
         }
 
+        public Incidencia Listar(int? idIncidencia)
+        {
+
+            Incidencia inc = new Incidencia();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearProcedimiento("SP_FiltrarIncidencias");
+                datos.SetearParametro("@IdIncidencia", (object)idIncidencia ?? DBNull.Value);
+
+                datos.EjecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    inc = LeerIncidencia(datos);
+                }
+
+                return inc;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+
+        }
+
         public List<Incidencia> Filtrar(int? idIncidencia, int? idEstado, int? idTipo, int? idPrioridad)
         {
             List<Incidencia> lista = new List<Incidencia>();
@@ -86,6 +113,36 @@ namespace Negocio
                 }
 
                 return lista;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+        public int Modificar(Incidencia inc)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearProcedimiento("SP_ModificarIncidencia");
+                datos.SetearParametro("@IdCliente", inc.Cliente.IdCliente);
+                datos.SetearParametro("@IdTipo", inc.Tipo.IdTipo);
+                datos.SetearParametro("@IdPrioridad", inc.Prioridad.IdPrioridad);
+                datos.SetearParametro("@IdEstado", (int)inc.Estado);
+                datos.SetearParametro("@IdUsuarioCreador", inc.UsuarioCreador.IdUsuario);
+                datos.SetearParametro("@IdUsuarioAsignado", inc.UsuarioAsignado.IdUsuario);
+                datos.SetearParametro("@Problematica", inc.Problematica);
+
+                datos.EjecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    return (int)datos.Lector["IdIncidencia"];
+                }
+
+                return 0;
             }
             finally
             {

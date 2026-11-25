@@ -1,15 +1,15 @@
 ﻿<%@ Page Title="Incidencia" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="IncidenciaForm.aspx.cs" Inherits="CallCenterWeb.IncidenciaForm" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <!-- Encabezado -->
-<div class="card shadow-sm mt-4 mb-4">
-    <div class="card-body d-flex justify-content-between align-items-center flex-wrap">
-        <div>
+    <div class="card shadow-sm mt-4 mb-4">
+        <div class="card-body d-flex justify-content-between align-items-center flex-wrap">
+         <div>
             <h2 class="mb-1">
-                Incidencia N° 1
-                <span class="badge bg-danger fs-6">Crítica</span>
-                <span class="badge bg-warning text-dark fs-6">En análisis</span>
+                <asp:Literal ID="litTituloIncidencia" runat="server" Text="Nueva incidencia" />
+                <asp:Literal ID="litBadgePrioridad" runat="server" />
+                <asp:Literal ID="litBadgeEstado" runat="server" />
             </h2>
-            <a runat="server" href="~/Incidencias" class="small">← Volver al listado</a>
+            <a runat="server" href="~/Incidencias.aspx" class="small">← Volver al listado</a>
         </div>
 
         <!-- Botones de acción (solo en modo editar) -->
