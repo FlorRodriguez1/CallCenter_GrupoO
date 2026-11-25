@@ -136,7 +136,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <asp:Button ID="btnResolver" runat="server" Text="Resolver" CssClass="btn btn-success" />
+                <asp:Button ID="btnResolver" runat="server" Text="Resolver" CssClass="btn btn-success" OnClick="btnResolver_Click" />
             </div>
         </div>
     </div>
@@ -156,7 +156,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <asp:Button ID="btnCerrar" runat="server" Text="Cerrar incidencia" CssClass="btn btn-dark" />
+                <asp:Button ID="btnCerrar" runat="server" Text="Cerrar incidencia" CssClass="btn btn-dark" OnClick="btnCerrar_Click" />
             </div>
         </div>
     </div>
@@ -172,13 +172,13 @@
             </div>
             <div class="modal-body">
                 <label class="form-label">Asignar a <span class="text-danger">*</span></label>
-                <asp:DropDownList ID="ddlUsuarioAsignado" runat="server" CssClass="form-select">
+                <asp:DropDownList ID="ddlUsuarioAsignado" runat="server" CssClass="form-select" AppendDataBoundItems="true">
                     <asp:ListItem Text="Seleccione un usuario..." Value="" />
                 </asp:DropDownList>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <asp:Button ID="btnReasignar" runat="server" Text="Reasignar" CssClass="btn btn-primary" />
+                <asp:Button ID="btnReasignar" runat="server" Text="Reasignar" CssClass="btn btn-primary" OnClick="btnReasignar_Click" />
             </div>
         </div>
     </div>
@@ -199,7 +199,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <asp:Button ID="btnSolicitarReapertura" runat="server" Text="Enviar solicitud" CssClass="btn btn-danger" />
+                <asp:Button ID="btnSolicitarReapertura" runat="server" Text="Enviar solicitud" CssClass="btn btn-danger" OnClick="btnSolicitarReapertura_Click" />
             </div>
         </div>
     </div>

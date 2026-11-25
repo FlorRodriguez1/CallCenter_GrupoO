@@ -69,6 +69,11 @@ namespace CallCenterWeb
             ddlPrioridad.DataTextField = "Descripcion";
             ddlPrioridad.DataValueField = "IdPrioridad";
             ddlPrioridad.DataBind();
+
+            ddlUsuarioAsignado.DataSource = new UsuarioNegocio().Listar();
+            ddlUsuarioAsignado.DataTextField = "NombreUsuario";
+            ddlUsuarioAsignado.DataValueField = "IdUsuario";
+            ddlUsuarioAsignado.DataBind();
         }
 
         private void CargarIncidencia(int idIncidencia)
@@ -180,10 +185,133 @@ namespace CallCenterWeb
                     Context.ApplicationInstance.CompleteRequest();
                 }
             }
+
+
             catch (Exception ex)
             {
                 ManejarError(ex);
             }
+        }
+
+        protected void btnResolver_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtComentarioRespuesta.Text))
+            {
+                MostrarMensaje("Para resolver hay que escribir la respuesta al cliente.");
+                return;
+            }
+
+            try
+            {
+                Usuario usuario = (Usuario)Session["Usuario"];
+                Incidencia inc = new IncidenciaNegocio().Listar(IdIncidenciaActual.Value);
+
+                new IncidenciaNegocio().Resolver(inc.IdIncidencia, txtComentarioRespuesta.Text.Trim());
+                new HistorialNegocio().Agregar(inc.IdIncidencia, usuario.IdUsuario,
+                    inc.Estado, EstadoIncidencia.Resuelto, "Resuelta: " + txtComentarioRespuesta.Text.Trim());
+
+                RecargarPagina();
+            }
+            catch (Exception ex)
+            {
+                ManejarError(ex);
+            }
+        }
+
+        protected void btnCerrar_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtComentarioCierre.Text))
+            {
+                MostrarMensaje("Para cerrar hay que escribir un comentario de cierre.");
+                return;
+            }
+
+            try
+            {
+                Usuario usuario = (Usuario)Session["Usuario"];
+                Incidencia inc = new IncidenciaNegocio().Listar(IdIncidenciaActual.Value);
+
+                new IncidenciaNegocio().Cerrar(inc.IdIncidencia, txtComentarioCierre.Text.Trim());
+                new HistorialNegocio().Agregar(inc.IdIncidencia, usuario.IdUsuario,
+                    inc.Estado, EstadoIncidencia.Cerrado, "Cerrada: " + txtComentarioCierre.Text.Trim());
+
+                RecargarPagina();
+            }
+            catch (Exception ex)
+            {
+                ManejarError(ex);
+            }
+        }
+
+        protected void btnReasignar_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(ddlUsuarioAsignado.SelectedValue))
+            {
+                MostrarMensaje("Elegí a qué usuario reasignar la incidencia.");
+                return;
+            }
+
+            try
+            {
+                Usuario usuario = (Usuario)Session["Usuario"];
+                Incidencia inc = new IncidenciaNegocio().Listar(IdIncidenciaActual.Value);
+                int idNuevo = int.Parse(ddlUsuarioAsignado.SelectedValue);
+
+                new IncidenciaNegocio().Reasignar(inc.IdIncidencia, idNuevo);
+                new HistorialNegocio().Agregar(inc.IdIncidencia, usuario.IdUsuario,
+                    inc.Estado, EstadoIncidencia.Asignado, "Reasignada a " + ddlUsuarioAsignado.SelectedItem.Text);
+
+                RecargarPagina();
+            }
+            catch (Exception ex)
+            {
+                ManejarError(ex);
+            }
+        }
+
+        protected void btnSolicitarReapertura_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtMotivoReapertura.Text))
+            {
+                MostrarMensaje("Escribí el motivo de la reapertura.");
+                return;
+            }
+
+            try
+            {
+                Usuario usuario = (Usuario)Session["Usuario"];
+                Incidencia inc = new IncidenciaNegocio().Listar(IdIncidenciaActual.Value);
+
+                // Solo se puede pedir reapertura de una incidencia resuelta o cerrada
+                if (inc.Estado != EstadoIncidencia.Resuelto && inc.Estado != EstadoIncidencia.Cerrado)
+                {
+                    MostrarMensaje("Solo se puede pedir reapertura de una incidencia resuelta o cerrada.");
+                    return;
+                }
+
+                new SolicitudReaperturaNegocio().Solicitar(inc.IdIncidencia, usuario.IdUsuario, txtMotivoReapertura.Text.Trim());
+                new HistorialNegocio().Agregar(inc.IdIncidencia, usuario.IdUsuario,
+                    inc.Estado, inc.Estado, "Solicitud de reapertura: " + txtMotivoReapertura.Text.Trim());
+
+                RecargarPagina();
+            }
+            catch (Exception ex)
+            {
+                ManejarError(ex);
+            }
+        }
+
+        // Vuelve a abrir la misma incidencia para ver los cambios
+        private void RecargarPagina()
+        {
+            Response.Redirect("IncidenciaForm.aspx?id=" + IdIncidenciaActual.Value, false);
+            Context.ApplicationInstance.CompleteRequest();
+        }
+
+        private void MostrarMensaje(string mensaje)
+        {
+            lblMensaje.Text = mensaje;
+            lblMensaje.Visible = true;
         }
 
         private void SeleccionarValor(DropDownList ddl, int? id)

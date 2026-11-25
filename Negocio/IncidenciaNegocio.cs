@@ -149,6 +149,54 @@ namespace Negocio
             }
         }
 
+        public void Resolver(int idIncidencia, string respuesta)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("UPDATE Incidencias SET IdEstado = 4, FechaResolucion = GETDATE(), ComentarioRespuesta = @Comentario WHERE IdIncidencia = @IdIncidencia");
+                datos.SetearParametro("@Comentario", respuesta);
+                datos.SetearParametro("@IdIncidencia", idIncidencia);
+                datos.EjecutarAccion();
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+        public void Cerrar(int idIncidencia, string comentario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("UPDATE Incidencias SET IdEstado = 6, FechaCierre = GETDATE(), ComentarioCierre = @Comentario WHERE IdIncidencia = @IdIncidencia");
+                datos.SetearParametro("@Comentario", comentario);
+                datos.SetearParametro("@IdIncidencia", idIncidencia);
+                datos.EjecutarAccion();
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+        public void Reasignar(int idIncidencia, int idUsuarioNuevo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("UPDATE Incidencias SET IdEstado = 2, IdUsuarioAsignado = @IdUsuario WHERE IdIncidencia = @IdIncidencia");
+                datos.SetearParametro("@IdUsuario", idUsuarioNuevo);
+                datos.SetearParametro("@IdIncidencia", idIncidencia);
+                datos.EjecutarAccion();
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
         private Incidencia LeerIncidencia(AccesoDatos datos)
         {
             Incidencia aux = new Incidencia();

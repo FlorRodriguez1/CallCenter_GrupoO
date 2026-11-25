@@ -119,6 +119,23 @@ namespace Negocio
             }
         }
 
+        public void Solicitar(int idIncidencia, int idUsuario, string motivo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("INSERT INTO SolicitudesReapertura (IdIncidencia, IdUsuarioSolicitante, Motivo) VALUES (@IdIncidencia, @IdUsuario, @Motivo)");
+                datos.SetearParametro("@IdIncidencia", idIncidencia);
+                datos.SetearParametro("@IdUsuario", idUsuario);
+                datos.SetearParametro("@Motivo", motivo);
+                datos.EjecutarAccion();
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
         public void Rechazar(int idSolicitud, int idSupervisor, string comentario)
         {
             Incidencia incidencia = ObtenerIncidenciaDeSolicitud(idSolicitud);
