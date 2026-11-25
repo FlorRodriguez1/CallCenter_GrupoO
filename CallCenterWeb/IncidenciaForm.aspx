@@ -105,33 +105,21 @@
 <asp:Panel ID="pnlHistorial" runat="server" CssClass="card shadow-sm mb-4">
     <div class="card-body">
         <h5 class="mb-3">Historial de cambios</h5>
-        <table class="table align-middle">
-            <thead class="table-light">
-                <tr>
-                    <th>Fecha</th>
-                    <th>Usuario</th>
-                    <th>Estado anterior</th>
-                    <th>Estado nuevo</th>
-                    <th>Comentario</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>30/10/2026 10:52</td>
-                    <td>telefonista1</td>
-                    <td><span class="badge bg-primary">Abierto</span></td>
-                    <td><span class="badge bg-warning text-dark">En análisis</span></td>
-                    <td>Se modificó la problemática.</td>
-                </tr>
-                <tr>
-                    <td>29/10/2026 08:45</td>
-                    <td>telefonista1</td>
-                    <td>-</td>
-                    <td><span class="badge bg-primary">Abierto</span></td>
-                    <td>Alta de la incidencia.</td>
-                </tr>
-            </tbody>
-        </table>
+                <asp:GridView ID="dgvHistorial" runat="server" AutoGenerateColumns="false"
+            CssClass="table align-middle" HeaderStyle-CssClass="table-light"
+            GridLines="None" EmptyDataText="Sin movimientos todavía.">
+            <Columns>
+                <asp:BoundField DataField="Fecha" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy HH:mm}" />
+                <asp:TemplateField HeaderText="Usuario">
+                    <ItemTemplate><%# Eval("Usuario.NombreUsuario") %></ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Estado anterior">
+                    <ItemTemplate><%# Eval("EstadoAnterior") == null ? "-" : Eval("EstadoAnterior").ToString() %></ItemTemplate>
+                </asp:TemplateField>
+                <asp:BoundField DataField="EstadoNuevo" HeaderText="Estado nuevo" />
+                <asp:BoundField DataField="Comentario" HeaderText="Comentario" />
+            </Columns>
+        </asp:GridView>
     </div>
 </asp:Panel>
     <!-- Modal, ventana Resolver con comentario -->

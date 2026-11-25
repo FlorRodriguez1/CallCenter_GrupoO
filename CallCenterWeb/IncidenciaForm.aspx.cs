@@ -86,7 +86,7 @@ namespace CallCenterWeb
                 litBadgePrioridad.Text = $"<span class=\"badge {cssPrioridad} fs-6\">{inc.Prioridad.Descripcion}</span> ";
             }
 
-            
+
             {
                 string estadoTexto = inc.Estado.ToString();
                 string cssEstado = ObtenerCssEstado(estadoTexto);
@@ -103,6 +103,8 @@ namespace CallCenterWeb
             SeleccionarValor(ddlPrioridad, inc.Prioridad?.IdPrioridad);
 
             txtProblematica.Text = inc.Problematica ?? string.Empty;
+            dgvHistorial.DataSource = new HistorialNegocio().Listar(inc.IdIncidencia);
+            dgvHistorial.DataBind();
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
@@ -143,6 +145,8 @@ namespace CallCenterWeb
                     existente.Problematica = txtProblematica.Text.Trim();
 
                     negocio.Modificar(existente);
+                    new HistorialNegocio().Agregar(existente.IdIncidencia, usuarioLogueado.IdUsuario,
+                    existente.Estado, existente.Estado, "Se modificaron los datos del reclamo.");
                     Response.Redirect($"Incidencias.aspx?editada={existente.IdIncidencia}", false);
                     Context.ApplicationInstance.CompleteRequest();
                 }
