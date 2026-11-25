@@ -56,7 +56,7 @@
                     <asp:TextBox ID="txtProblematica" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="5" />
                     <small class="text-muted">Cualquier modificación queda registrada en el historial.</small>
                 </div>
-
+                   <asp:Label ID="lblMensaje" runat="server" CssClass="alert alert-danger d-block" Visible="false" />
                 <div class="text-end">
                     <asp:Button ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-primary" OnClick="btnGuardar_Click" />
                 </div>
@@ -72,27 +72,27 @@
 
                 <div class="bg-light rounded p-2 mb-2">
                     <small class="text-muted">Estado</small>
-                    <div><span class="badge bg-warning text-dark">En análisis</span></div>
+                    <div><asp:Literal ID="litEstado" runat="server" /></div>
                 </div>
                 <div class="bg-light rounded p-2 mb-2">
                     <small class="text-muted">Creado por</small>
-                    <div class="fw-bold">telefonista1</div>
+                    <div class="fw-bold"><asp:Literal ID="litCreador" runat="server" /></div>
                 </div>
                 <div class="bg-light rounded p-2 mb-2">
                     <small class="text-muted">Asignado a</small>
-                    <div class="fw-bold">telefonista1</div>
+                   <div class="fw-bold"><asp:Literal ID="litAsignado" runat="server" /></div>
                 </div>
                 <div class="row">
                     <div class="col-6">
                         <div class="bg-light rounded p-2 mb-2">
                             <small class="text-muted">Fecha de creación</small>
-                            <div class="fw-bold">29/10/2026</div>
+                            <div class="fw-bold"><asp:Literal ID="litFechaCreacion" runat="server" /></div>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="bg-light rounded p-2 mb-2">
                             <small class="text-muted">Fecha de resolución</small>
-                            <div class="fw-bold">-</div>
+                            <div class="fw-bold"><asp:Literal ID="litFechaResolucion" runat="server" /></div>
                         </div>
                     </div>
                 </div>

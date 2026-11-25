@@ -37,6 +37,9 @@ namespace CallCenterWeb
                         litTituloIncidencia.Text = "Nueva incidencia";
                         litBadgePrioridad.Text = string.Empty;
                         litBadgeEstado.Text = string.Empty;
+                        pnlAcciones.Visible = false;
+                        pnlDatos.Visible = false;
+                        pnlHistorial.Visible = false;
                     }
                 }
             }
@@ -103,6 +106,11 @@ namespace CallCenterWeb
             SeleccionarValor(ddlPrioridad, inc.Prioridad?.IdPrioridad);
 
             txtProblematica.Text = inc.Problematica ?? string.Empty;
+            litEstado.Text = litBadgeEstado.Text;
+            litCreador.Text = inc.UsuarioCreador.Nombre;
+            litAsignado.Text = inc.UsuarioAsignado.Nombre;
+            litFechaCreacion.Text = inc.FechaCreacion.ToString("dd/MM/yyyy HH:mm");
+            litFechaResolucion.Text = inc.FechaResolucion.HasValue ? inc.FechaResolucion.Value.ToString("dd/MM/yyyy") : "-";
             dgvHistorial.DataSource = new HistorialNegocio().Listar(inc.IdIncidencia);
             dgvHistorial.DataBind();
         }
@@ -116,6 +124,8 @@ namespace CallCenterWeb
                     string.IsNullOrEmpty(ddlPrioridad.SelectedValue) ||
                     string.IsNullOrWhiteSpace(txtProblematica.Text))
                 {
+                    lblMensaje.Text = "Completá cliente, tipo, prioridad y problemática.";
+                    lblMensaje.Visible = true;
                     return;
                 }
 
