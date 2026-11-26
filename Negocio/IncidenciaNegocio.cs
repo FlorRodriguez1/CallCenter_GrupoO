@@ -122,6 +122,9 @@ namespace Negocio
 
         public int Modificar(Incidencia inc)
         {
+            // Estado antes de guardar, para avisar al cliente solo si cambia
+            int estadoAnterior = ObtenerIdEstado(inc.IdIncidencia);
+            int resultado = 0;
             AccesoDatos datos = new AccesoDatos();
 
             try
@@ -138,19 +141,21 @@ namespace Negocio
 
                 if (datos.Lector.Read())
                 {
-                    return (int)datos.Lector["IdIncidencia"];
+                    resultado = (int)datos.Lector["IdIncidencia"];
                 }
-
-                return 0;
             }
             finally
             {
                 datos.CerrarConexion();
             }
+
+            NotificarSiCambio(inc.IdIncidencia, estadoAnterior);
+            return resultado;
         }
 
         public void Resolver(int idIncidencia, string respuesta)
         {
+            int estadoAnterior = ObtenerIdEstado(idIncidencia);
             AccesoDatos datos = new AccesoDatos();
             try
             {
@@ -163,10 +168,13 @@ namespace Negocio
             {
                 datos.CerrarConexion();
             }
+
+            NotificarSiCambio(idIncidencia, estadoAnterior);
         }
 
         public void Cerrar(int idIncidencia, string comentario)
         {
+            int estadoAnterior = ObtenerIdEstado(idIncidencia);
             AccesoDatos datos = new AccesoDatos();
             try
             {
@@ -179,10 +187,13 @@ namespace Negocio
             {
                 datos.CerrarConexion();
             }
+
+            NotificarSiCambio(idIncidencia, estadoAnterior);
         }
 
         public void Reasignar(int idIncidencia, int idUsuarioNuevo)
         {
+            int estadoAnterior = ObtenerIdEstado(idIncidencia);
             AccesoDatos datos = new AccesoDatos();
             try
             {
@@ -194,6 +205,41 @@ namespace Negocio
             finally
             {
                 datos.CerrarConexion();
+            }
+
+            NotificarSiCambio(idIncidencia, estadoAnterior);
+        }
+
+        // Estado actual de la incidencia (0 si no existe)
+        private int ObtenerIdEstado(int idIncidencia)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("SELECT IdEstado FROM Incidencias WHERE IdIncidencia = @IdIncidencia");
+                datos.SetearParametro("@IdIncidencia", idIncidencia);
+                datos.EjecutarLectura();
+
+                return datos.Lector.Read() ? (int)datos.Lector["IdEstado"] : 0;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+        // Manda el mail al cliente solo si el estado cambió. Nunca lanza excepción:
+        // un problema con el mail no debe afectar al cambio de estado ya guardado.
+        private void NotificarSiCambio(int idIncidencia, int estadoAnterior)
+        {
+            try
+            {
+                if (ObtenerIdEstado(idIncidencia) != estadoAnterior)
+                    new NotificacionNegocio().NotificarCambioEstado(idIncidencia);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("No se pudo notificar al cliente: " + ex.Message);
             }
         }
 
