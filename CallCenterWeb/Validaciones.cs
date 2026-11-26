@@ -10,13 +10,13 @@ namespace CallCenterWeb
             return Regex.IsMatch(dni, @"^\d{7,8}$");
         }
 
-        // Email: algo@algo.algo, sin espacios
+        // Email: xas@asas.com, sin espacios
         public static bool EmailValido(string email)
         {
             return Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$");
         }
 
-        // Teléfono: números, espacios y guiones, entre 6 y 20 caracteres (ej: 11-4000-1111)
+        // Teléfono: números, espacios y guiones, entre 6 y 20 caracteres 
         public static bool TelefonoValido(string telefono)
         {
             return Regex.IsMatch(telefono, @"^[\d\s-]{6,20}$");

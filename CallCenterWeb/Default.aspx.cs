@@ -22,11 +22,45 @@ namespace CallCenterWeb
 
         private void RellenarEstadisticas()
         {
-            IncidenciaEstadisticasGuardia stats = new TipoIncidenciaNegocio().ObtenerEstadisticasGuardia();
-            litAbiertas.Text = stats.Abiertas.ToString();
-            litAnalisis.Text = stats.Analisis.ToString();
-            litResueltas.Text = stats.Resueltas.ToString();
-            litReaperturas.Text = stats.Reaperturas.ToString();
+            Usuario usuario = Session["Usuario"] as Usuario;
+            if (usuario == null)
+                return;   // la Master lo manda al Login
+
+            List<Incidencia> lista = new IncidenciaNegocio().Listar();
+            int abiertas = 0;
+            int analisis = 0;
+            int resueltasHoy = 0;
+
+            foreach (Incidencia inc in lista)
+            {
+                // El telefonista solo cuenta las que tiene asignadas
+                if (usuario.Perfil == Perfil.Telefonista && inc.UsuarioAsignado.IdUsuario != usuario.IdUsuario)
+                    continue;
+
+                
+
+                if (inc.Estado == EstadoIncidencia.Abierto ||
+                    inc.Estado == EstadoIncidencia.Asignado ||
+                    inc.Estado == EstadoIncidencia.Reabierto)
+                {
+                    abiertas++;
+                }
+                else if (inc.Estado == EstadoIncidencia.EnAnalisis)
+                {
+                    analisis++;
+                }
+                else if (inc.Estado == EstadoIncidencia.Resuelto &&
+                         inc.FechaResolucion.HasValue &&
+                         inc.FechaResolucion.Value.Date == DateTime.Today)
+                {
+                    resueltasHoy++;
+                }
+            }
+
+            litAbiertas.Text = abiertas.ToString();
+            litAnalisis.Text = analisis.ToString();
+            litResueltas.Text = resueltasHoy.ToString();
+            litReaperturas.Text = new SolicitudReaperturaNegocio().ContarPorEstado(EstadoSolicitud.Pendiente).ToString();
         }
         private void CargarRecientes()
         {
@@ -38,6 +72,9 @@ namespace CallCenterWeb
             {
                 // las cerradas no se muestran en el inicio
                 if (inc.Estado == EstadoIncidencia.Cerrado)
+                    continue;
+                Usuario usuario = Session["Usuario"] as Usuario;
+                if (usuario != null && usuario.Perfil == Perfil.Telefonista && inc.UsuarioAsignado.IdUsuario != usuario.IdUsuario)
                     continue;
 
                 if (busqueda != "")

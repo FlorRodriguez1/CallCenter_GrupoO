@@ -7,7 +7,7 @@ namespace Negocio
 {
     public class SolicitudReaperturaNegocio
     {
-        // Si idEstado es null trae todas
+        
         public List<SolicitudReapertura> Listar(int? idEstado)
         {
             List<SolicitudReapertura> lista = new List<SolicitudReapertura>();
@@ -96,8 +96,8 @@ namespace Negocio
 
             try
             {
-                // 1) la solicitud pasa a Aprobada (2)
-                // 2) la incidencia pasa a Reabierto (5) y se borran las fechas de resolución y cierre
+                // 1) la solicitud pasa a Aprobada 
+                // 2) la incidencia pasa a Reabierto y se borran las fechas de resolución y cierre
                 // 3) se guarda el cambio en el historial
                 datos.SetearConsulta(
                     "UPDATE SolicitudesReapertura SET IdEstadoSolicitud = 2, IdUsuarioSupervisor = @IdSupervisor, FechaRespuesta = GETDATE() " +
