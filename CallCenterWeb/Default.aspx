@@ -8,7 +8,6 @@
             <h2>Resumen operativo</h2>
             <p class="text-muted mb-0">Estado de los reclamos del turno actual.</p>
         </div>
-        <a class="btn btn-primary" runat="server" href="~/IncidenciaForm">+ Nueva incidencia</a>
     </div>
 
     <!-- Tarjetas -->

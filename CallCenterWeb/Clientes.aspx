@@ -7,7 +7,7 @@
         <h2>Gestión de clientes</h2>
         <p class="text-muted mb-0">Clientes registrados y estado de sus cuentas.</p>
     </div>
-    <a class="btn btn-primary" runat="server" href="~/ClienteForm">+ Nuevo cliente</a>
+    <a class="btn btn-primary" id="btnNuevoCliente" runat="server" href="~/ClienteForm">+ Nuevo cliente</a>
 </div>
 
 <!-- Tarjetas -->

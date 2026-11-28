@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using static CallCenterWeb.Seguridad;
 
 namespace CallCenterWeb
 {
@@ -22,9 +23,6 @@ namespace CallCenterWeb
 
         private void RellenarEstadisticas()
         {
-            Usuario usuario = Session["Usuario"] as Usuario;
-            if (usuario == null)
-                return;   // la Master lo manda al Login
 
             List<Incidencia> lista = new IncidenciaNegocio().Listar();
             int abiertas = 0;
@@ -34,10 +32,9 @@ namespace CallCenterWeb
             foreach (Incidencia inc in lista)
             {
                 // El telefonista solo cuenta las que tiene asignadas
+                Usuario usuario = Session["Usuario"] as Usuario;
                 if (usuario.Perfil == Perfil.Telefonista && inc.UsuarioAsignado.IdUsuario != usuario.IdUsuario)
                     continue;
-
-                
 
                 if (inc.Estado == EstadoIncidencia.Abierto ||
                     inc.Estado == EstadoIncidencia.Asignado ||

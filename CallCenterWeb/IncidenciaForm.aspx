@@ -14,7 +14,7 @@
 
         <!-- Botones de acción (solo en modo editar) -->
         <asp:Panel ID="pnlAcciones" runat="server" CssClass="mt-2">
-            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalReasignar">Reasignar</button>
+            <button type="button" id="btnReasginar" runat="server" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalReasignar">Reasignar</button>
             <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalResolver">Resolver</button>
             <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalCerrar">Cerrar incidencia</button>
             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalReapertura">Solicitar reapertura</button>

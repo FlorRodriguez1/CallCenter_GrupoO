@@ -10,5 +10,11 @@ namespace CallCenterWeb
             Usuario usuario = usuarioSesion as Usuario;
             return usuario != null && usuario.Perfil == Perfil.Administrador;
         }
+
+        public static bool EsSupervisor(object usuarioSesion)
+        {
+            Usuario usuario = usuarioSesion as Usuario;
+            return usuario != null && usuario.Perfil == Perfil.Supervisor;
+        }
     }
 }

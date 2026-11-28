@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using static CallCenterWeb.Seguridad;
 
 namespace CallCenterWeb
 {
@@ -23,6 +24,9 @@ namespace CallCenterWeb
             {
                 if (!IsPostBack)
                 {
+                    Usuario usuario = (Usuario)Session["Usuario"];
+                    btnReasginar.Visible = EsSupervisor(usuario);
+
                     CargarDesplegables();
 
                     string idParam = Request.QueryString["id"];
